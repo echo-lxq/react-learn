@@ -215,3 +215,72 @@ JSX-使用react构造组件，bable进行编译->JavaScript对象->ReactDOM.rend
 
 ### 2.class组件 ###
 ES6的加入让JavaScript直接支持使用class来定义一个类，react创建组件的方式就是使用的类的继承，ES6 class是目前官方推荐的使用方式，它使用了ES6标准语法来构建
+
+**react中创建组件**
+组件-JS+HTML+CSS绑定到一个文件内，方便复用；
+
+es6 类
+
+    class Test {
+    	constructor(){
+    		this.a = 23;
+    	}
+    	testA(){
+    		console.log(this.a)
+    	}
+    }
+    
+    class ChildTest extends Test{
+    	testB(){
+    		console.log(this.a)
+    	}
+    }
+    
+    var obj = new ChildTest();
+    obj.testB();
+
+**1.React类组件**
+
+定义组件
+
+    import React from "react";
+    
+    //只有继承React.Component才为定义一个组件，否则为定义一个类
+    class WeiShanApp extends React.Component{
+    
+    render(){
+    	return <div>
+    	Hello React Component
+    	<ul>
+    		<li>1</li>
+    		<li>2</li>
+    	</ul>
+    	</div> //为jsx语法
+    }
+    
+    }
+    
+    export default WeiShanApp;
+
+使用组件
+
+	import React from "react";
+	
+	import ReactDOM from "react-dom/client";
+	
+	import App from "./01-base/01-class组件"; //使用组件部分
+	
+	const container = document.getElementById('root');
+	
+	const root = ReactDOM.createRoot(container);
+	
+	root.render(
+	    // React.createElement("div",{
+	    //     id:"aaa",
+	    //     className:"bbb"
+	    // },"123")
+	    
+	    <App/>  //使用组件部分
+	);
+
+**2.函数组件**
