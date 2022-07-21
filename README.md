@@ -241,7 +241,7 @@ es6 类
 
 **1.React类组件**
 
-定义组件
+定义组件 - return中保证最外层只有一个标签
 
     import React from "react";
     
@@ -249,7 +249,7 @@ es6 类
     class WeiShanApp extends React.Component{
     
     render(){
-    	return <div>
+    	return <div>    //js return 后面加回车 返回undefined
     	Hello React Component
     	<ul>
     		<li>1</li>
@@ -262,7 +262,7 @@ es6 类
     
     export default WeiShanApp;
 
-使用组件
+使用组件 - import的时候需要使用首字母大写，否则会当游览器默认标签
 
 	import React from "react";
 	
@@ -283,4 +283,69 @@ es6 类
 	    <App/>  //使用组件部分
 	);
 
-**2.函数组件**
+**2.函数组件** 
+
+> 16.8之前无状态组件
+> 
+> 16.8之后 react hooks
+
+定义组件
+
+	function App(){
+	    return(
+	        <div>
+	            function Component
+	        </div>
+	    )   
+	}
+	
+	export default App;
+
+使用与类组件相同
+
+**3.组件间嵌套**
+
+**重要** - vscode安扩展可以用快捷键自动生成类组件必要代码
+> 
+> 组件名 - VS Code ES7 React/Redux/React-Native/JS snippets
+> 
+> 快捷键 - 输入rcc + 回车  =  生成类组件必要代码
+
+. 组件嵌套
+
+    import React, {Component} from 'react'
+    
+    class Navbar extends Component{
+    	render(){
+	    	return(
+	    		<div>Navbar</div>
+	    	)
+    	}
+    }
+    
+    function Swiper(){
+	    return (
+	    	<div>Swiper</div>
+	    )
+    }
+    
+    //es6 箭头函数 箭头函数后面为该函数返回值
+    const Tabbar =()=><div>Tabbar</div>
+    
+    class App extends Component{
+      render() {
+	    return (
+	      <div>
+		    <Navbar></Navbar>
+		    <Swiper></Swiper>
+		    <Tabbar></Tabbar>
+	      </div>
+	    )
+      }
+    }
+    
+    export default App;
+
+**4.组件的样式**
+
+

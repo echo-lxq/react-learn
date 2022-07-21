@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-18 11:25:54
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-07-20 16:46:36
+ * @LastEditTime: 2022-07-21 08:35:58
  * @FilePath: \react-learn\src\index.js
  * @Description: 
  * 
@@ -12,7 +12,11 @@ import React from "react";
 
 import ReactDOM from "react-dom/client";
 
-import App from "./01-base/01-class组件";
+// import App from "./01-base/01-class组件";
+
+// import App from "./01-base/02-函数式组件";
+
+import App from "./01-base/03-组件间嵌套";
 
 const container = document.getElementById('root');
 
