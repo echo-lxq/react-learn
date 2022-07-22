@@ -239,7 +239,7 @@ es6 类
     var obj = new ChildTest();
     obj.testB();
 
-**1.React类组件**
+### 3.React类组件 ###
 
 定义组件 - return中保证最外层只有一个标签
 
@@ -283,7 +283,7 @@ es6 类
 	    <App/>  //使用组件部分
 	);
 
-**2.函数组件** 
+### 4.函数组件 ###
 
 > 16.8之前无状态组件
 > 
@@ -300,10 +300,11 @@ es6 类
 	}
 	
 	export default App;
+	
 
 使用与类组件相同
 
-**3.组件间嵌套**
+### 5.组件间嵌套 ###
 
 **重要** - vscode安扩展可以用快捷键自动生成类组件必要代码
 > 
@@ -346,7 +347,9 @@ es6 类
     
     export default App;
 
-**4.组件的样式**
+### 6.组件的样式 ###
+
+react推荐我们使用行内样式，因为React觉得每一个组件都是一个独立的整体
 
     import React, { Component } from 'react'
     import './css/01-index.css' //导入css模块  webpack的支持！
@@ -388,5 +391,140 @@ es6 类
       }
     }
 
-5.
+### 7.事件绑定 ###
+
+> ①几种事件绑定的方法
+
+    import React, { Component } from 'react'
+    
+    export default class App extends Component {
+    
+      render() {
+    	return (
+	      	<div>
+	    		<input type="text" />
+	    		{/* 方法一 如果处理逻辑过多，不推荐这种 */}
+	    		<button onClick={()=>{
+	    			console.log("click1");
+	    		}}>add1</button>
+	    
+	    		{/* 方法二 */}
+	    		<button onClick={this.handleClick2}>add2</button>
+	    
+	    		{/* 方法三 */}
+	    		<button onClick={this.handleClick3}>add3</button>
+	    
+	    		{/* 方法四  比较推荐 */}
+	    		<button onClick={()=>{
+	    			this.handleClick4()
+	    		}}>add4</button>
+	      </div>
+    	)
+      }
+    
+      handleClick2 = ()=>{
+    	  console.log("click2");
+      }
+    
+      handleClick3(){
+    	  console.log("click3");
+      }
+    
+      handleClick4(){
+    	  console.log("click4");
+      }
+    
+    }
+
+> ②几种事件绑定中this的指针域
+
+**js中改变this指向**
+
+    /**
+      * 改变this指向的方法
+      * 
+      * call 改变了this指向，并自动执行函数
+      * apply 改变了this指向，并自动执行函数
+      * bind 改变了this指向，手动加 () 执行函数
+      */
+    var obj1 = {
+	    name:"obj1",
+	    getName(){
+	    	console.log(this.name)
+	    }
+      }
+    
+    var obj2 = {
+       name:"obj2",
+       getName(){
+       	console.log(this.name)
+       }
+    }
+    
+    obj1.getName.call(obj2) // 修改this指向 调用 call
+    obj1.getName.apply(obj2) // 修改this指向 调用 apply
+    obj1.getName.bind(obj2) // 修改this指向 不调用 bind
+    obj1.getName.bind(obj2)() // 函数调用使用 () 执行函数
+    obj2.getName()
+
+**优化方法四说明this指针域**
+
+	import React, { Component } from 'react'
+	
+	export default class App extends Component {
+	
+	    a = 100
+	    
+	  render() {
+	    return (
+	      <div>
+	            <input type="text" />
+	            {/* 方法一 可以调用 this.a 箭头函数里面 this与外面render指针域一样 */}
+	            <button onClick={()=>{
+	                console.log("click1",this.a);
+	            }}>add1</button>
+	
+	            {/* 方法二 可以调用 this.a 箭头函数里面 this与外面render指针域一样*/}
+	            <button onClick={this.handleClick2}>add2</button>
+	
+	            {/* 方法三 不可调用 this.a 被reatc事件系统调用，this指向react事件系统不是app实例*/}
+	            <button onClick={this.handleClick3.bind(this)}>add3</button> {/* bind 可以绑定来修正 */}
+	
+	            {/* 方法四  比较推荐 传参的时候方便 */}
+	            <button onClick={()=>this.handleClick4()}>add4</button>
+	      </div>
+	    )
+	  }
+	
+	  handleClick2 = ()=>{
+	        console.log("click2",this.a);
+	  }
+	
+	  handleClick3(){
+	        //这函数谁调用this指向谁
+	        console.log("click3",this.a);
+	  }
+	
+	  handleClick4(){
+	    console.log("click4",this.a);
+	  }
+	
+	}
+
+> ③.事件绑定注意事项与面试
+
+**--react事件绑定与普通事件绑定的区别**<br>
+&nbsp;&nbsp;
+react并不会真正的绑定事件到每一个具体的元素上，而是采用事件代理的模式；占用内存小；
+
+点击按钮有捕获与冒泡的过程，react模拟：从事件源一直找到根节点，有对应事件就执行；
+
+react把时间绑定到代理身上(根节点，移除根节点上事件绑定就失效)
+
+     handleClick2 = (ref)=>{
+    	console.log("click2",this.a,ref.target);
+    	//输出为 click2 100 <button>add2</button>
+      }
+
+### 8.ref的应用 ###
 
