@@ -526,5 +526,125 @@ react把时间绑定到代理身上(根节点，移除根节点上事件绑定�
     	//输出为 click2 100 <button>add2</button>
       }
 
+### 复习 ###
+
+    import React,{Component} from "react";
+    
+    import "./css/01-index.css";
+    
+    /**
+     * 练习三种组件 - 出错 注意首字母大写 
+     * - 组件写行内样式时候，样式单独定义为object，使用{}给style引入样式变量
+     */
+    
+    class Navigator extends Component{
+    
+	    render(){
+	    	var styleNav = {backgroundColor:"red"}
+	    
+	    	return <div style={styleNav}>navigator</div>
+	    }
+	    
+	}
+	    
+	function Content(){
+	    return <div className="active">content</div>
+	}
+	    
+	    
+	var Bottom = () =>{
+	    return (<div>bottom</div>)
+	}
+	    
+	var Other = () => <div id="myapp">other</div>
+	    
+	class App extends Component{
+	    
+	    cha = 'this pointer'
+	    
+	    render(){
+	    
+		    var click1 = {
+		    	userSelect:"none"
+	    	}
+	    
+	    	return (<div>
+	    
+	    		<Navigator></Navigator>
+	    		<Content></Content>
+	    		<Bottom></Bottom>
+	   			<Other></Other>
+	    
+			    {/* 事件绑定 */}
+			    <label style={click1} htmlFor="click1">用户名</label>
+			    
+			    <button id="click1" onClick={()=>{console.log("click1",this.cha)}}>按钮1</button>
+			    
+			    <button onClick={this.click2.bind(this)}>按钮2</button>
+			    
+			    <button onClick={this.click3}>按钮3</button>
+			    
+			    <button onClick={()=>{this.click4()}}>按钮4</button>
+	    
+	    
+	    	</div>)
+	    }
+	    
+	    click2(){
+	    	console.log("click2",this.cha)
+	    }
+	    
+	    click3 = ()=>{
+	    	console.log("click3",this.cha)
+	    }
+	    
+	    click4 = () =>{
+	    	console.log("click4",this.cha)
+	    }
+    
+    }
+    
+    export default App
+
 ### 8.ref的应用 ###
 
+ref 引用
+
+> myref = React.createRef()
+> 
+> 可以绑定在标签或者组件上
+> 
+> ref={this.myref}
+>
+>通过下面方法访问到
+> 
+> this.myref.current
+
+
+	import React, { Component } from 'react'
+	
+	export default class App extends Component {
+	
+	    a = 100
+	
+	    myref = React.createRef()
+	    
+	  render() {
+	
+	    return (
+	      <div>
+	            <input type="text" ref={this.myref} />
+	            <button onClick={()=>this.handleClick()}>add</button>
+	      </div>
+	    )
+	  }
+	
+	  handleClick(){
+	    console.log("click",this.myref.current.value); //添加current属性才可以拿到dom
+	  }
+	
+	}
+
+## 七、组件的数据挂载方式 ##
+
+### 1.状态 ###

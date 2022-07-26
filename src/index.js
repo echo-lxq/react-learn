@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-18 11:25:54
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-07-22 09:05:33
+ * @LastEditTime: 2022-07-26 09:23:33
  * @FilePath: \react-learn\src\index.js
  * @Description: 
  * 
@@ -16,7 +16,7 @@ import ReactDOM from "react-dom/client";
 
 // import App from "./01-base/02-函数式组件";
 
-import App from "./01-base/06-事件邦定-2";
+import App from "./01-base/07-ref应用";
 
 const container = document.getElementById('root');
 
@@ -27,6 +27,11 @@ root.render(
     //     id:"aaa",
     //     className:"bbb"
     // },"123")
+    // 使用严格模式校验 React.StrictMode 
+    <React.StrictMode>
     
-    <App/>
+        <App/>
+    
+    </React.StrictMode>
+    
 );
