@@ -648,3 +648,44 @@ ref 引用
 ## 七、组件的数据挂载方式 ##
 
 ### 1.状态 ###
+状态就是组件描述某种显示情况的数据，由组件自己设置和更改，也就是说由组件自己维护，使用状态的目的就是为了在不同的状态下使组件的显示不同(自己管理)
+
+**初识状态**
+
+> 定义为全局对象，名字固定位state
+> 
+> 使用this.state调用
+
+	import React, { Component } from 'react'
+	
+	export default class App extends Component {
+	
+	    //变量名字固定
+	    state = {
+	        myText:"收藏", //未用
+	        myShow:true
+	    }
+	
+	  render() {
+	    return (
+	      <div>
+	        <h1>React开发</h1>
+	        <button onClick={()=>{
+	            this.setState(
+	                {
+	                    myShow:!this.state.myShow
+	                }
+	            )
+	            
+	            if(this.state.myShow){
+	                console.log("执行收藏的逻辑")
+	            }else{
+	                console.log("取消收藏的逻辑")
+	            }
+	
+	        }}>{this.state.myShow?'收藏':"取消收藏"}</button>
+	      </div>
+	    )
+	  }
+	}
+
