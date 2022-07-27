@@ -689,3 +689,41 @@ ref 引用
 	  }
 	}
 
+**另外：**
+
+可以在构造函数中定义状态，但是注意继承构造函数中应有super()*
+
+	//第二种定义状态的方法
+    constructor(){
+
+      super()
+
+      this.state = {
+        myShow:true
+      }
+
+    }
+
+ES6中的派生类，就是extend的class。派生出的构造函数不会创造新的this对象(或者说this指向的对象(这里可以回顾一下new关键字做的事情)，就是所说的"子类没有自己的this"。只有通过super()把基类创建好的this对象接下来，派生类才能像基类一样使用this来生成对象的属性。
+
+JavaScript 强制要求在 constructor 中使用 this 之前，必须先调用 super（继承）。
+
+**且**
+
+可以一下修改**多个**状态值
+
+
+      this.state = {
+        myShow:true,
+        myText:"未命名",
+		myName:"微山"
+      }
+
+
+      this.setState(
+	      {
+	         myShow:!this.state.myShow,
+	         myText:"已命名"
+	      }
+      )
+

@@ -2,8 +2,8 @@
  * @Author: WeiShan
  * @Date: 2022-07-25 08:13:51
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-07-26 08:56:00
- * @FilePath: \react-learn\src\01-base\07-ref应用.js
+ * @LastEditTime: 2022-07-27 16:14:41
+ * @FilePath: \react-learn\src\01-base\00-间接复习.js
  * @Description: 
  * 
  * Copyright (c) 2022 by XLS, All Rights Reserved. 
@@ -42,6 +42,12 @@ class App extends Component{
 
     cha = 'this pointer'
 
+    myRef = React.createRef() 
+
+    state = {
+        isClick:true        
+    }
+
     render(){
 
         var click1 = {
@@ -66,6 +72,20 @@ class App extends Component{
 
             <button onClick={()=>{this.click4()}}>按钮4</button>
 
+            {/* ref 应用 与 state状态 */}
+            <input type="text" ref={this.myRef} />
+            <button onClick={()=>{
+                this.tRef()
+                
+                this.setState({isClick:!this.state.isClick}) 
+                
+                if(this.state.isClick){
+                    console.log("执行收藏的逻辑")
+                }else{
+                    console.log("执行取消收藏的逻辑")
+                }
+            }}>{this.state.isClick?"收藏":"取消收藏"}</button>
+
 
         </div>)
     }
@@ -80,6 +100,15 @@ class App extends Component{
 
     click4 = () =>{
         console.log("click4",this.cha)
+    }
+
+    tRef = ()=>{
+        console.log("tRef",this.myRef.current.value)
+        var a;
+        console.log(a) //undefined
+        // var b = {age:123}
+        // delete b.age
+        // console.log(b==b)
     }
 
 }
