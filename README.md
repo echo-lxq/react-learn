@@ -727,3 +727,50 @@ JavaScript 强制要求在 constructor 中使用 this 之前，必须先调用 s
 	      }
       )
 
+### 2.循环渲染 ###
+
+**JS中${}使用!!**
+
+et age = prompt('How old are you',100);
+
+alert('You are ${age} years old') //You are 100 years old!
+
+**JS中map()方法！！**
+
+map定义和方法 map()方法返回一个新数组，数组中的元素为原始数组元素调用函数处理的后值。
+
+map()方法按照原始数组元素顺序依次处理元素。
+
+    map() 方法创建一个新数组，其结果是该数组中的每个元素都调用一个提供的函数后返回的结果。
+    var array1 = [1,4,9,16];
+    const map1 = array1.map(x => x *2);
+    console.log(map1);
+
+**--循环渲染部分--**
+
+	import React, { Component } from 'react'
+	
+	export default class App extends Component {
+	
+	    state = {
+	        list:["1","2","3"]
+	    }
+	
+	  render() {
+	
+	    var newList = this.state.list.map(item=><li key={item}>{item}</li>)
+	
+	    return (
+	      <div>
+	        <ul>
+	            {/* 第一种 */}
+	            {/* {this.state.list.map(item=><li>{item}</li>)} */}
+	
+	            {/* 第二种 */}
+	            {newList}
+	        </ul>
+	      </div>
+	    )
+	  }
+	}
+
