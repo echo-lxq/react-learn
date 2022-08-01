@@ -74,7 +74,7 @@ Ant Degisn是个很好的React UI库，看起来跟我们熟知的bootstrap有�
 
 ## 三、目录介绍 ##
     README.md -- 使用方法的文档
-    node_modules -- 所有的以来安装的目录
+    node_modules -- 所有的依赖安装的目录
     package-lock.json -- 锁定安装的包的版本号保证团队的依赖能保证一致
     package.json 
     public -- 静态公共目录
@@ -749,16 +749,18 @@ map()方法按照原始数组元素顺序依次处理元素。
 **--循环渲染部分--**
 
 	import React, { Component } from 'react'
-	
+
 	export default class App extends Component {
 	
 	    state = {
-	        list:["1","2","3"]
+	        list:[
+	          {id:1,text:"1"},{id:2,text:"2"},{id:3,text:"3"}
+	        ]
 	    }
 	
 	  render() {
 	
-	    var newList = this.state.list.map(item=><li key={item}>{item}</li>)
+	    var newList = this.state.list.map(item=><li key={item.id}>{item.text}</li>)
 	
 	    return (
 	      <div>
@@ -774,3 +776,106 @@ map()方法按照原始数组元素顺序依次处理元素。
 	  }
 	}
 
+### 3.key值 ###
+
+> 为了列表的复用和重排，设置key值，提高性能
+> 
+> 理想key值是 item.id
+>
+>不涉及到列表的增加删除，重排，设置成索引没有问题
+>
+>key值为每个元素的唯一标识
+
+循环渲染不适用key，虚拟dom发生变化时候，会比较新的虚拟dom与原来的比较(diff)，例如删除原来中的一个，需要对比前后虚拟dom来确定哪个发生变化而重新渲染，加上key可以快速定位到哪个被改变；
+
+![](./src/images/dom_diff.png)
+
+> 状态使用key值
+
+	state = {
+        list:[
+          {id:1,text:"1"},{id:2,text:"2"},{id:3,text:"3"}
+        ]
+    }
+	var newList = this.state.list.map(item=><li key={item.id}>{item.text}</li>)
+
+> map可以传递两个参数
+
+	var newList = this.state.list.map((item,index)=><li key={index}>{item.text}</li>)
+
+### 4.todolist ###
+
+> 涉及深拷贝浅拷贝
+> 
+> react不建议直接修改状态-可能造成不可预期的错误
+
+	import React, { Component } from 'react'
+	
+	export default class App extends Component {
+	    myRef = React.createRef()
+	
+	    constructor(){
+	        super()
+	        this.state = {
+	            state: true,
+	            list:[
+	                {id:1,text:"111"},
+	                {id:2,text:"222"},
+	                {id:3,text:"333"}
+	            ],
+	        }
+	    }
+	
+	    render() {
+	        
+	        return (
+	            <div>
+	                <input type="text" ref={this.myRef} />
+	                <button onClick={()=>{
+	                    this.myRefClick();
+	                }}>添加</button>
+	
+	                <ul>
+	                    {this.state.list.map(item=><li key={item.id}>{item.text}</li>)}
+	                </ul>
+	
+	                <button onClick={()=>{this.setState({state:!this.state.state})}}>
+	                    {this.state.state?"收藏":"取消收藏"}
+	                </button>
+	
+	            </div>
+	        )
+	    }
+	
+	    myRefClick = ()=>{
+	        console.log("点击",this.myRef.current.value)
+	
+	        //不推荐 更新数组 不要直接修改状态 - 可能造成不可预期的状态
+	        // this.state.list.push({
+	        //     id:this.myRef.current.value,
+	        //     text:this.myRef.current.value
+	        // })
+	
+	        //js处理复杂数据类型赋值方式为引用赋值(多一把钥匙) 
+	        //不推荐  ！！注意 此下为引用赋值 也属于上面那种直接修改的
+	        // let newList = this.state.list
+	        // newList.push(this.myRef.current.value)
+	
+	        //深复制(深拷贝) slice()方法、[...arr]方法
+	
+	        let newList_ = [...this.state.list]
+	        newList_.push({
+	            id:Math.random()*100, //生成不同id的函数
+	            text:this.myRef.current.value
+	        })
+	
+	        //重新渲染
+	        this.setState(
+	            {
+	                list:newList_
+	            }
+	        )
+	
+	    }
+	
+	}

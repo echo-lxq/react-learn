@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-25 08:13:51
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-07-27 16:14:41
+ * @LastEditTime: 2022-08-01 08:32:26
  * @FilePath: \react-learn\src\01-base\00-间接复习.js
  * @Description: 
  * 
@@ -39,14 +39,34 @@ var Bottom = () =>{
 var Other = () => <div id="myapp">other</div>
 
 class App extends Component{
+    
+    constructor(){
+
+        super()  //**注意在构造函数内集成super */
+
+        this.state = {
+            isClick:true,
+            list:["111","222","333"],
+            sampleList:[
+                {id:1,text:"小红"},
+                {id:2,text:"小明"},
+                {id:3,text:"小白"},
+                {id:4,text:"小零"},
+            ]
+        }
+    }
 
     cha = 'this pointer'
 
     myRef = React.createRef() 
 
-    state = {
-        isClick:true        
-    }
+    newRef = React.createRef()
+
+    // state = {
+    //     isClick:true        
+    // }
+
+   
 
     render(){
 
@@ -86,6 +106,27 @@ class App extends Component{
                 }
             }}>{this.state.isClick?"收藏":"取消收藏"}</button>
 
+            <br></br>
+
+            <h2>列表渲染</h2>
+
+            <ul>
+
+                {this.state.list.map(item=><li key={item}>{item}</li>)}
+
+            </ul>
+
+            <br></br>
+            {/* 简单的 todo list */}
+            <h2>简单的todolist</h2>
+            <input type="text" ref={this.newRef} />
+            <button onClick={()=>{
+                this.sampleList()
+            }}>添加</button>
+            <ul>
+                {this.state.sampleList.map(item=><li key={item.id}>{item.text}</li>)}
+            </ul>
+
 
         </div>)
     }
@@ -109,6 +150,25 @@ class App extends Component{
         // var b = {age:123}
         // delete b.age
         // console.log(b==b)
+    }
+
+    sampleList = ()=>{
+        let inputText = this.newRef.current.value;
+        let setId = parseInt(Math.random() * 10000);
+        let addNew = {id:setId,text:inputText};
+        let newList = this.state.sampleList.slice();
+
+        //!!!重新渲染部分知识忘记
+
+        this.setState(
+            {
+                sampleList:newList
+            }
+        )
+
+        newList.push(addNew)
+        console.log(newList)
+        console.log(this.state.sampleList)
     }
 
 }
