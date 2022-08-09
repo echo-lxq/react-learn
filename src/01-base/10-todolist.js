@@ -2,13 +2,15 @@
  * @Author: WeiShan
  * @Date: 2022-07-29 11:54:02
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-09 11:23:10
- * @FilePath: \react-learn\src\01-base\10.todolist.js
+ * @LastEditTime: 2022-08-09 22:56:35
+ * @FilePath: \react-learn\src\01-base\10-todolist.js
  * @Description: 
  * 
  * Copyright (c) 2022 by XLS, All Rights Reserved. 
  */
 import React, { Component } from 'react'
+
+import "./css/01-index.css"
 
 export default class App extends Component {
     myRef = React.createRef()
@@ -43,6 +45,16 @@ export default class App extends Component {
                         }}>删除</button>
                     </li>)}
                 </ul>
+
+                {/* 条件渲染部分 */}
+                {/* 方案一 */}
+                {this.state.list.length === 0 ?<div>条件渲染一</div>:null}
+
+                {/* 方案二 利用 && 前面为真后面才有机会执行 */}
+                {this.state.list.length ===0 && <div>条件渲染二</div>}
+
+                {/* 方案三 已经创建好 动态控制class来控制显示与隐藏 */}
+                <div className={this.state.list.length ===0?'':'hidden'}>条件渲染三</div>
 
                 <button onClick={()=>{this.setState({state:!this.state.state})}}>
                     {this.state.state?"收藏":"取消收藏"}

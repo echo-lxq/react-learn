@@ -928,3 +928,47 @@ map()方法按照原始数组元素顺序依次处理元素。
 
     }
 
+### 条件渲染部分 ###
+
+	{/* 条件渲染部分 */}
+    {/* 方案一 */}
+    {this.state.list.length === 0 ?<div>条件渲染一</div>:null}
+
+    {/* 方案二 利用 && 前面为真后面才有机会执行 */}
+    {this.state.list.length ===0 && <div>条件渲染二</div>}
+
+    {/* 方案三 已经创建好 动态控制class来控制显示与隐藏 */}
+    <div className={this.state.list.length ===0?'':'hidden'}>条件渲染三</div>
+
+### 5.dangerouslySetInnerHTML ###
+
+	import React, { Component } from 'react'
+	
+	export default class App extends Component {
+	
+	    constructor(){
+	        super()
+	        this.state = {
+	            myhtml:"<div><b>解析</b><br/><h1>标签</h1></div>"
+	        }
+	    }
+	
+	  render() {
+	    return (
+	      <div>
+	        
+	        {/* 可以用到那时很危险，足够信任代码片段，后端返回接口数据 */}
+	
+	        <div dangerouslySetInnerHTML={
+	            {
+	                __html:this.state.myhtml
+	            }
+	        }>
+	
+	        </div>
+	
+	      </div>
+	    )
+	  }
+	}
+
