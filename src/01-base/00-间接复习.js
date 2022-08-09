@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-25 08:13:51
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-01 08:32:26
+ * @LastEditTime: 2022-08-09 10:10:13
  * @FilePath: \react-learn\src\01-base\00-间接复习.js
  * @Description: 
  * 
@@ -124,7 +124,9 @@ class App extends Component{
                 this.sampleList()
             }}>添加</button>
             <ul>
-                {this.state.sampleList.map(item=><li key={item.id}>{item.text}</li>)}
+                {this.state.sampleList.map((item,index)=><li key={item.id}>{item.text}<button onClick={()=>{
+                    this.delTodolist(index);
+                }}>删除</button></li>)}
             </ul>
 
 
@@ -169,6 +171,22 @@ class App extends Component{
         newList.push(addNew)
         console.log(newList)
         console.log(this.state.sampleList)
+    }
+
+    //执行删除元素程序
+    delTodolist = (index) => {
+        // console.log("点击了删除按钮",index)
+        
+        let newList = this.state.sampleList.slice();
+
+        newList.splice(index,1);
+
+        this.setState(
+            {
+                sampleList:newList
+            }
+        )
+
     }
 
 }
