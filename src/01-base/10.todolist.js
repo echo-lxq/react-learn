@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-29 11:54:02
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-01 08:33:30
+ * @LastEditTime: 2022-08-02 08:38:33
  * @FilePath: \react-learn\src\01-base\10.todolist.js
  * @Description: 
  * 
@@ -35,7 +35,13 @@ export default class App extends Component {
                 }}>添加</button>
 
                 <ul>
-                    {this.state.list.map(item=><li key={item.id}>{item.text}</li>)}
+                    {this.state.list.map((item,index)=>
+                    <li key={item.id}>
+                        {item.text}
+                        <button onClick={()=>{
+                            this.handleDelClick(index);
+                        }}>删除</button>
+                    </li>)}
                 </ul>
 
                 <button onClick={()=>{this.setState({state:!this.state.state})}}>
@@ -77,6 +83,25 @@ export default class App extends Component {
 
         console.log(newList_)
         console.log(this.state.list)
+
+    }
+
+    handleDelClick = (index) => {
+        console.log("点击删除",index)
+
+        //不要直接修改原状态，造成不可预期问题
+
+        let newList = this.state.list.slice(); //slice
+
+        newList.splice(index,1); //splice
+
+        console.log(newList)
+
+        this.setState(
+            {
+                list:newList
+            }
+        )
 
     }
 

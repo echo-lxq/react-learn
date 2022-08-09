@@ -879,3 +879,52 @@ map()方法按照原始数组元素顺序依次处理元素。
 	    }
 	
 	}
+<br>
+> todolist删除部分
+
+方法一：通过map方法循环渲染的时候可以通过**(item,index)**=>想要映射的内容中index值
+通过**函数参数传递**的方法获取到是删除了哪个节点
+
+	<ul>
+		{this.state.list.map((item,index)=>
+        	<li key={item.id}>
+            	{item.text}
+            	<button onClick={()=>{
+                	this.handleDelClick(index);
+                }}>删除</button>
+            </li>)}
+     </ul>
+
+	handleDelClick = (index) => {
+        console.log("点击删除",index)
+    }
+
+方法二：**bind(this,"111")**后中"111"也可以进行参数传递
+
+	<button onClick={
+    	this.handleDelClick.bind(this,index);
+    }>删除</button>
+
+
+### 执行删除方法 ###
+
+ 	handleDelClick = (index) => {
+
+        console.log("点击删除",index)
+
+        //不要直接修改原状态，造成不可预期问题
+
+        let newList = this.state.list.slice(); //slice
+
+        newList.splice(index,1); //splice
+
+        console.log(newList)
+
+        this.setState(
+            {
+                list:newList
+            }
+        )
+
+    }
+
