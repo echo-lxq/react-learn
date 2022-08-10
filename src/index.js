@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-18 11:25:54
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-09 23:22:06
+ * @LastEditTime: 2022-08-10 23:13:23
  * @FilePath: \react-learn\src\index.js
  * @Description: 
  * 
@@ -28,10 +28,10 @@ root.render(
     //     className:"bbb"
     // },"123")
     // 使用严格模式校验 React.StrictMode 
-    <React.StrictMode>
+    // <React.StrictMode>
     
         <App/>
     
-    </React.StrictMode>
+    // </React.StrictMode>
     
 );

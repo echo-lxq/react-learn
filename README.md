@@ -973,7 +973,7 @@ map()方法按照原始数组元素顺序依次处理元素。
 	}
 
 
-6.数据请求 - axios
+### 6.数据请求 - axios ###
 
 > 安装 axios
     
@@ -982,43 +982,50 @@ map()方法按照原始数组元素顺序依次处理元素。
 > 数据请求部分代码
 
 	import React, { Component } from 'react'
-	
+
 	import axios from 'axios';
 	
 	export default class Cinema extends Component {
-
-    // 请求数据部分，暂时放到构造函数里面  后面的生命周期函数更适合发送ajax
-    constructor(){
-        super()
-        //axios 第三方的库，专门用于请求数据 axios封装给予es6的promise
-        // axios.get("请求地址").then(res=>{}).catch(err=>{console.log(err)})
-
-        //简写方式
-        // axios.get("https://m.maizuo.com/gateway?cityId=110100&ticketFlag=1&k=7406159").then(res=>{
-        //   console.log(res)
-        // }).catch(err=>{
-        //   console.log(err)
-        // })
-
-      axios({
-        url:"https://m.maizuo.com/gateway?cityId=110100&ticketFlag=1&k=7406159",
-        method:"get",
-        headers:{
-          'x-Client':'{"a":"3000","ch":"1002","v":"5.0.4","e":"16395416565231270166529","bc":"110100"}',
-          'x-Host':'mall.film-ticket.cinema.list'
-        }
-      }).then(res=>{
-        console.log(res.data)
-      })
-
-    }
-
+	
+	    // 请求数据部分，暂时放到构造函数里面  后面的生命周期函数更适合发送ajax
+	    constructor(){
+	        super()
+	        //axios 第三方的库，专门用于请求数据 axios封装给予es6的promise
+	        // axios.get("请求地址").then(res=>{}).catch(err=>{console.log(err)})
+	
+	        //简写方式
+	        // axios.get("https://m.maizuo.com/gateway?cityId=110100&ticketFlag=1&k=7406159").then(res=>{
+	        //   console.log(res)
+	        // }).catch(err=>{
+	        //   console.log(err)
+	        // })
+	      axios({
+	        url:"https://m.maizuo.com/gateway?cityId=110100&ticketFlag=1&k=7406159",
+	        method:"get",
+	        headers:{
+	          'X-Client-Info': '{"a":"3000","ch":"1002","v":"5.2.1","e":"1660142019135536282959873","bc":"110100"}',
+	          'X-Host': 'mall.film-ticket.cinema.list'
+	        }
+	      }).then(res=>{
+	        console.log(res.data.data.cinemas)
+	      })
+	      console.log("qwe")
+	
+	
+	
+	    }
+	
+	
 	  render() {
 	    return (
 	      <div>Cinema</div>
 	    )
+	    
 	  }
 	}
+
+### ！！！严格模式下 -- <React.StrictMode><App/></React.StrictMode> StrticMode默认会执行两次render，来检测你的render函数有没有副作用。 ###
+
 
 
 

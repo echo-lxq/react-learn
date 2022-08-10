@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-08-09 23:21:38
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-10 15:14:58
+ * @LastEditTime: 2022-08-10 23:14:10
  * @FilePath: \react-learn\src\01-base\12-卖座选项卡.js
  * @Description: 
  * 
@@ -10,13 +10,13 @@
  */
 import React, { Component } from 'react'
 
+import "./css/02-maizuo.css"
+
 import Film from './maizuocomponent/Film'
 
 import Cinema from './maizuocomponent/Cinema'
 
 import Center from './maizuocomponent/Center'
-
-import "./css/02-maizuo.css"
 
 export default class App extends Component {
 
@@ -47,12 +47,12 @@ export default class App extends Component {
         {this.state.click_current === 2&&<Center></Center>} */}
 
         {/* 加载哪个组件 */}
-        {this.which()}
-
-
+        {
+        this.which()
+        }
         <ul>
           {/* 根据当前点击的索引跟当前索引判断 */}
-          {this.state.list.map((item,index)=><li className={this.state.click_current === index?'active':''} key={item.id} onClick={()=>{this.listClick(index)}} >{item.text}</li>)}
+          {this.state.list.map((item,index)=><li className={this.state.click_current === index?'active':''} key={item.id} onClick={()=>this.listClick(index)} >{item.text}</li>)}
         </ul>
       </div>
     )
@@ -68,7 +68,7 @@ export default class App extends Component {
   }
 
   //加载哪个组件
-  which(){
+  which=()=>{
     switch(this.state.click_current){
       case 0:
         return <Film></Film>;
@@ -80,5 +80,4 @@ export default class App extends Component {
         return null;
     }
   }
-
 }
