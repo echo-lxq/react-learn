@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-08-10 15:01:13
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-10 23:29:43
+ * @LastEditTime: 2022-08-11 15:42:25
  * @FilePath: \react-learn\src\01-base\maizuocomponent\Cinema.js
  * @Description: 
  * 
@@ -19,7 +19,8 @@ export default class Cinema extends Component {
         super()
 
         this.state = {
-          cinemaList: []
+          cinemaList: [],
+          bakCinemaList:[]
         }
 
         //axios 第三方的库，专门用于请求数据 axios封装给予es6的promise
@@ -41,7 +42,8 @@ export default class Cinema extends Component {
       }).then(res=>{
         this.setState(
           {
-            cinemaList:res.data.data.cinemas
+            cinemaList:res.data.data.cinemas,
+            bakCinemaList:res.data.data.cinemas
           }
         )
       })
@@ -52,6 +54,11 @@ export default class Cinema extends Component {
   render() {
     return (
       <div>
+
+        {/* 注意使用 jsx的语法中的{} 可以自动传入一个event */}
+        <input type="text" onInput={this.handleInput} />
+
+        {/* 请求数据 */}
         {this.state.cinemaList.map(item=>
           <dl key={item.cinemaId}>
             <dt>{item.name}</dt>
@@ -62,4 +69,34 @@ export default class Cinema extends Component {
     )
     
   }
+
+  //搜索框中输入
+  handleInput = (event)=>{
+    console.log("input",event.target.value)
+
+    var newList = this.state.bakCinemaList.filter(item=>item.name.toUpperCase().includes(event.target.value.toUpperCase())||
+    item.address.toUpperCase().includes(event.target.value.toUpperCase())
+    )
+
+    // console.log(newList)
+
+    //cinemaList 每次都会被覆盖
+    this.setState(
+      {
+        cinemaList:newList
+      }
+    )
+    
+  }
+
 }
+
+/**
+ * filter 不会改变原对象
+ */
+
+var arr = ["aaa","abc","bcc"]
+
+var newarr = arr.filter(item=>item.includes("a"))
+
+console.log(newarr)
