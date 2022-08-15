@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-18 11:25:54
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-10 23:13:23
+ * @LastEditTime: 2022-08-15 22:38:08
  * @FilePath: \react-learn\src\index.js
  * @Description: 
  * 
@@ -16,7 +16,7 @@ import ReactDOM from "react-dom/client";
 
 // import App from "./01-base/02-函数式组件";
 
-import App from "./01-base/12-卖座选项卡";
+import App from "./01-base/13-setState同步异步";
 
 const container = document.getElementById('root');
 

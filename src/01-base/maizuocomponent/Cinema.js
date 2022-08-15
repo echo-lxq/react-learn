@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-08-10 15:01:13
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-11 15:42:25
+ * @LastEditTime: 2022-08-15 22:30:27
  * @FilePath: \react-learn\src\01-base\maizuocomponent\Cinema.js
  * @Description: 
  * 
@@ -40,12 +40,20 @@ export default class Cinema extends Component {
           'X-Host': 'mall.film-ticket.cinema.list'
         }
       }).then(res=>{
+        console.log(res.data.data.cinemas)
         this.setState(
           {
             cinemaList:res.data.data.cinemas,
             bakCinemaList:res.data.data.cinemas
           }
         )
+
+        //打印log
+        console.log(this.state.cinemaList)
+        console.log(this.state.bakCinemaList)
+
+      }).catch(err=>{
+        console.log(err);
       })
 
     }
@@ -86,6 +94,11 @@ export default class Cinema extends Component {
         cinemaList:newList
       }
     )
+
+    //打印log
+
+    console.log(this.state.cinemaList)
+
     
   }
 

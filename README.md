@@ -1027,6 +1027,70 @@ map()方法按照原始数组元素顺序依次处理元素。
 ### ！！！严格模式下 -- <React.StrictMode><App/></React.StrictMode> StrticMode默认会执行两次render，来检测你的render函数有没有副作用。 ###
 
 
+### 7.setState同步异步 ###
+> setState()更新状态的2种写法
+
+1). **setState(updater, [callback])**,<br>
+   updater为返回stateChange对象的函数: (state, props) => stateChange<br>
+   接收的state和props被保证为最新的
+
+2). **setState(stateChange, [callback])**<br>
+    stateChange为对象,<br>
+    callback是可选的回调函数, 在状态更新且界面更新后才执行
+
+**总结**
+    
+对象方式是函数方式的简写方式<br>
+如果需要在setState()后获取最新的状态数据, 在第二个callback函数中读取
+
+
+> 连续多次调用setState页面怎么执行
+
+**①setState()更新状态是异步还是同步的?**
+
+1). 执行setState()的位置?
+
+  -  在react控制的回调函数中: 生命周期勾子 / react事件监听回调  => 异步
+-    非react控制的异步回调函数中: 定时器回调 / 原生事件监听回调 / promise回调 /... => 同步
+
+**②.关于异步的setState()**
+
+1. 多次调用, 如何处理?<br>
+setState({}): 合并更新一次状态, 只调用一次render()更新界面 ---状态更新和界面更新都合并了<br>
+setState(fn): 更新多次状态, 但只调用一次render()更新界面  ---状态更新没有合并, 但界面更新合并了
+
+1. 如何得到异步更新后的状态数据?<br>
+在setState()的callback回调函数中
+
+2. 为什么在react相关调用中是异步，其它是同步？<br>
+在react中用到了【事务】，它存在就是异步，而react之外未用到【事务】所以就是同步。
+
+### react18版本之后的变化 ###
+
+> React18新特性：Automatic batching 自动批处理
+
+- 什么是批处理(batchedUpdates)：React会尝试将同一上下文中触发的更新合并为一个更新
+
+关于批处理部分内容
+
+https://blog.csdn.net/shuxiaoxii/article/details/118078934
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
