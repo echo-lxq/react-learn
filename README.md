@@ -1071,13 +1071,77 @@ setState(fn): 更新多次状态, 但只调用一次render()更新界面  ---状
 
 - 什么是批处理(batchedUpdates)：React会尝试将同一上下文中触发的更新合并为一个更新
 
-关于批处理部分内容
+> 关于批处理部分内容
 
-https://blog.csdn.net/shuxiaoxii/article/details/118078934
+**批处理的好处**
 
+合并不必要的更新，减少更新流程调用次数<br>
+状态按顺序保存下来，更新时不会出现「竞争问题」<br>
+最终触发的更新是异步流程，减少浏览器掉帧可能性
 
+**批处理的几种类型**
 
+v18的「批处理」是自动的<br>
+v18之前的 React 使用半自动的「批处理」.<br>
+React同时提供了一个API 手动 「批处理」unstable_batchedupdates .
 
+- 关于手动批处理
+	onClick() {
+	  setTimeout(() => {
+	    ReactDOM.unstable_batchedUpdates(() => {
+	      this.setState({a: 3});
+	      this.setState({a: 4});
+	    })
+	  })
+	}
+
+> v18的自动批处理
+
+**实现：**<br>
+增加调度的流程<br>
+不以全局变量executionContext为批处理依据，而是以更新的「优先级」为依据
+
+**什么是优先级?**
+
+调用this.setState后源码内部会依次执行：
+
+1. 根据当前环境选择一个「优先级」lane
+1. 创造一个代表本次更新的update对象，赋予他步骤1的优先级
+1. 将update挂载在当前组件对应fiber（虚拟DOM）上
+1. 进入调度流程
+
+<i>每次调用this.setState会产生update对象，根据调用的场景他会拥有不同的lane（优先级）</i>
+
+**调度流程**
+
+在组件对应fiber挂载update后，就会进入「调度流程」。<br>
+试想，一个大型应用，在某一时刻，应用的不同组件都触发了更新。<br>
+那么在不同组件对应的fiber中会存在不同优先级的update。选出这些update中优先级最高的那个，以该优先级进入更新流程。<br>
+
+-整个过程**:**
+
+1. 获取当前所有优先级中最高的优先级
+1. 将步骤1的优先级作为本次调度的优先级
+1. 看是否已经存在一个调度
+1. 如果已经存在调度，且和当前要调度的优先级一致，则return
+1. 不一致的话就进入调度流程
+
+**自动批处理流程**
+
+	onClick() {
+	  this.setState({a: 3});
+	  this.setState({a: 4});
+	  this.setState({a: 5});
+	  this.setState({a: 6});
+	}
+
+只有第一次调用会执行调度，后面几次执行由于优先级和第一次一致会return。
+
+当一定时间过后，第一次调度的回调函数performConcurrentWorkOnRoot会执行，进入更新流程。
+
+由于每次执行this.setState都会创建update并挂载在fiber上。
+
+<a style="color:blue;">所以即使只执行一次更新流程，还是能将状态更新到最新。</a>
 
 
 
