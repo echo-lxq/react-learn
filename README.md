@@ -1145,7 +1145,45 @@ React同时提供了一个API 手动 「批处理」unstable_batchedupdates .
 
 调度的最终目的是在一定时间后执行performConcurrentWorkOnRoot，正式进入更新流程。
 
+### 8.BetterScroll ###
+BetterScroll是一款重点解决移动端(已支持PC)各种滚动场景需求的插件，使用纯JavaScript实现的，这意味着它是无依赖的。
 
+> 使用条件 父盒子高度一定 子盒子被撑开 overflow：hidden
+> 
+> 需要注意再react中使用需要dom渲染完成之后再new
+
+	import React, { Component } from 'react'
+	
+	import BetterScroll from 'better-scroll'
+	
+	export default class App extends Component {
+	  state = {
+	    list:[]
+	  }
+	  render() {
+	    return (
+	      <div>
+	        <button onClick={()=>{this.getData()}}>click</button>
+	        <div className="wrapper" style={{height:'200px',border:'1px solid red',overflow:'hidden'}}>
+	            <ul className="content">
+	                {this.state.list.map(item=><li key={item}>{item}</li>)}
+	            </ul>
+	        </div>
+	      </div>
+	    )
+	  }
+	  //点击按钮赋值
+	  getData(){
+	    var list = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
+	    this.setState({
+	        list:list
+	    },()=>{
+	        //放在setState回调函数中，等dom渲染完成之后再调用
+	        new BetterScroll(".wrapper")
+	    })
+	
+	  }
+	}
 
 
 
