@@ -1143,6 +1143,7 @@ React同时提供了一个API 手动 「批处理」unstable_batchedupdates .
 
 <a style="color:blue;">所以即使只执行一次更新流程，还是能将状态更新到最新。</a>
 
+调度的最终目的是在一定时间后执行performConcurrentWorkOnRoot，正式进入更新流程。
 
 
 

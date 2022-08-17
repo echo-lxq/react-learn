@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-08-15 22:37:43
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-15 23:47:27
+ * @LastEditTime: 2022-08-17 08:41:46
  * @FilePath: \react-learn\src\01-base\13-setState同步异步.js
  * @Description: 
  * 
@@ -43,11 +43,11 @@ export default class App extends Component {
     })
 
     this.setState({
-        count:this.state.count+1
+        count:this.state.count+2
     })
 
     this.setState({
-        count:this.state.count+1
+        count:this.state.count+3
     })
 
   }
@@ -62,11 +62,11 @@ export default class App extends Component {
         })
     
         this.setState({
-            count:this.state.count+1
+            count:this.state.count+2
         })
     
         this.setState({
-            count:this.state.count+1
+            count:this.state.count+3
         })
 
     },0)
