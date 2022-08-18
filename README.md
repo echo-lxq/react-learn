@@ -1187,16 +1187,199 @@ BetterScroll是一款重点解决移动端(已支持PC)各种滚动场景需求�
 
 ## 2.属性(props) ##
 ### 1.初识属性 ###
+> 父组件调用时候传入属性，子组件根据传入属性复用：
+
+父组件：
+
+	render() {
+	    return (
+	      <div>
+	        
+	        <div>
+	            <h2>首页</h2>
+	            {/* 调用navabar的时候加了一个属性 title */}
+	            <Navbar title="首页" leftShow={false}></Navbar>
+	        </div>
+	        
+	        <div>
+	            <h2>列表</h2>
+	            <Navbar title="列表" leftShow={true}></Navbar>
+	        </div>
+	
+	        <div>
+	            <h2>购物车</h2>
+	            <Navbar title="购物车" leftShow={true}></Navbar>
+	        </div>
+	
+	      </div>
+	    )
+	  }
+
+子组件：
+	
+	state = {
+	    //只能内部自己用的，外面无法改变
+	  }
+	
+	  //属性是父组件传来的,this.props
+	
+	  render() {
+	    // console.log(this.props.title)
+	
+	    let {title,leftShow} = this.props
+	
+	    // console.log(leftShow)
+	
+	    return (
+	      <div>
+	        {leftShow && <button>返回</button>}
+	        Navbar-{title}
+	        <button>home</button>
+	      </div>
+	    )
+	  }
+
+### 对象属性与类属性 ###
+
+	//类属性 不用new 就能访问到
+	Navbar.propTypes = {
+	    title:propTypes.string,
+	    leftShow:propTypes.bool
+	}
+	
+	class Test{
+	  //此处a为对象属性
+	  a = 1
+	}
+	
+	//类属性，不用new就能访问
+	Test.a = 100
+	
+	var obj = new Test();
+	
+	console.log(obj.a) // 1
+	
+	console.log(Test.a) // 100
+
+**es7**中的类属性
+
+    class Test{
+      //此处a为对象属性
+      a = 1
+    
+      //类属性
+      static a =101
+    
+    }
+    
 
 
+应用到属性验证
+
+    //类属性 不用new 就能访问到
+    Navbar.protoTypes = {
+	    title:验证是不是字符串的方法,
+	    leftShow:验证是不是bool的方法
+    }
+
+### 2.属性验证 ###
+
+> 引入react中属性验证模块
+
+    //react中属性验证模块 - prop-types
+    import propTypes from 'prop-types'
+
+> 组件中做好属性验证 - propTypes关键字 放在类外面
+    
+    //类属性 不用new 就能访问到
+    Navbar.propTypes = {
+	    title:propTypes.string,
+	    leftShow:propTypes.bool
+    }
+
+属性验证的推荐写法-使用static关键字
+
+	static propTypes = {
+	    title:propTypes.string,
+	    leftShow:propTypes.bool
+	  }
+
+### 3.默认属性 ###
+
+> 关键字 defaultProps
+
+    static defaultProps = {
+    	leftShow:true
+    }
+
+### 4.属性注意 ###
+
+> 展开写法
+
+    //上面父组件传来的
+    var obj = {
+      title:"测试",
+      leftShow:false
+    }
+
+    <Navbar title={obj.title} leftShow={obj.leftShow}></Navbar>
+
+    {/* 当与传入子组件参数一致时候，可以使用es6展开语法 */}
+    <Navbar {...obj}></Navbar>
 
 
+> 函数式组件使用属性
 
+**函数式组件使用形参接受属性**
 
-
-
-
-
+	function Sidebar(props){ //函数式组件接受属性
+	
+	    let {bg,position} = props
+	
+	    let obj1 = {
+	        left:0
+	    }
+	
+	    let obj2 = {
+	        right:0
+	    }
+	
+	    let obj = {
+	        background:bg,
+	        width:"200px",
+	        position:"fixed"
+	    }
+	
+	    let styleObj = position==="left"?{...obj,...obj1}:{...obj,...obj2}
+	
+	    return(
+	        <div style={styleObj}>
+	            <ul>
+	                <li>2</li>
+	                <li>2</li>
+	                <li>2</li>
+	                <li>2</li>
+	                <li>2</li>
+	                <li>2</li>
+	                <li>2</li>
+	            </ul>
+	        </div>
+	    )
+	
+	}
+	
+	//属性验证
+	Sidebar.defaultProps(
+	    {}
+	)
+	
+	Sidebar.prototype(
+	    {
+	
+	    }
+	)
+	
+	export default Sidebar;
 
 
 
