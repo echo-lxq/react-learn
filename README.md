@@ -1414,6 +1414,157 @@ const vDom2 = < h2 id={myId.toUpperCase()}>{msg}< /h2>
 <br>
 来创建dom
 
+## 3.属性VS状态 ##
+
+属性不能在组件内修改(但是可以给默认值)，状态要在组件内部修改；
+
+没有state的组件叫做无状态组件(stateless component),设置了state的叫做有状态组件(stateful component)。因为状态会带来管理的复杂性，我们**尽量写无状态的组件**。这样会降低代码的维护难度，也会一定成都上增加组件的可复用性。
+
+**！！！**父组件调用子组件的时候 重新更新调用传新属性的时候，子组件只会执行render函数，不会实例化两遍类(construct)<br>
+
+> 父组件状态传给孩子属性-标准
+
+	import React, { Component } from 'react'
+	
+	import lxq from 'prop-types'
+	
+	class Child extends Component{
+	
+	  constructor(){
+	    super()
+	    console.log("子组件控制器")
+	  }
+	
+	  static propTypes = {
+	    text:lxq.string
+	  }
+	  
+	    render(){
+	      console.log("子组件渲染")
+	        return(<div>Child-{this.props.text}</div>);
+	    }
+	
+	}
+	
+	export default class App extends Component {
+	
+	  state = {
+	    text:"123"
+	  }
+	
+	  render() {
+	    return (
+	      <div>
+	        <button onClick={()=>{
+	            this.setState(
+	              {
+	                text:"222"
+	              }
+	            ,()=>{
+	              console.log(this.state.text)
+	            })
+	        }}>父组件按钮</button>
+	        <div>{this.state.text}</div>
+	        <Child text={this.state.text}></Child>
+	      </div>
+	    )
+	  }
+	}
+
+## 4.渲染数据 ##
+
+......
+
+# 八.表单中的受控组件与非受控组件 #
+
+## 1.非受控组件 ##
+
+	import React, { Component } from 'react'
+	import { createRef } from 'react'
+	
+	export default class App extends Component {
+	  
+	    idRef = createRef()
+	
+	    render() {
+	    return (
+	      <div>
+	        <h1>登录页面</h1>
+	        <input type="text" ref = {this.idRef} defaultValue="userName" />
+	        <button onClick={()=>{this.login()}}>登录</button>
+	        <button onClick={()=>{this.clearInput()}}>重置</button>
+	      </div>
+	    )
+	
+	  }
+	   //登录操作
+	    login = ()=>{
+	        var userName = this.idRef.current.value
+	        //检查及提交数据
+	        console.log(userName)
+	    }
+	
+	    //清除输入框内容
+	    clearInput = ()=>{
+	        this.idRef.current.value = ""
+	    }
+	
+	}
+
+# 2.受控组件 #
+
+> 例子：输入框跟状态绑定
+> 
+> 受控组件注意重置与登录操作直接调用state
+
+	import React, { Component } from 'react'
+
+	export default class App extends Component {
+	  
+	    state = {
+	        userName:"WeiShan"
+	    }
+	
+	    render() {
+	    return (
+	      <div>
+	        <h1>登录页面</h1>
+	        <input type="text" value={this.state.userName} onChange={this.changeInput} />
+	        <button onClick={()=>{this.login()}}>登录</button>
+	        <button onClick={()=>{this.clearInput()}}>重置</button>
+	      </div>
+	    )
+	
+	  }
+	
+	    //监听输入框值
+	    changeInput = (evt)=>{
+	        console.log("onChange",evt.target.value)
+	
+	        this.setState(
+	            {
+	                userName:evt.target.value
+	            }
+	        )
+	
+	    }
+	
+	    //登录操作!!!
+	    login = ()=>{
+	        console.log(this.state.userName)
+	    }
+	
+	    //清除输入框内容!!!
+	    clearInput = ()=>{
+	        this.setState(
+	            {
+	                userName:''
+	            }
+	        )
+	    }
+	
+	}
+
 
 
 
