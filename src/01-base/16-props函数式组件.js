@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-08-18 22:58:53
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-18 23:23:45
+ * @LastEditTime: 2022-08-20 10:20:30
  * @FilePath: \react-learn\src\01-base\16-props函数式组件.js
  * @Description: 
  * 
@@ -19,7 +19,8 @@ export default class App extends Component {
     return (
       <div>
         {/* 类组件 */}
-        <Navbar title="类组件"></Navbar>
+        <Navbar title="类组件1" leftShow={true}></Navbar>
+        <Navbar title="类组件2" leftShow={false}></Navbar>
         {/* 函数式组件 */}
         <Sidebar bg="yellow" position="right"></Sidebar>
       </div>

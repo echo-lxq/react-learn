@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-08-18 08:18:18
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-18 22:38:57
+ * @LastEditTime: 2022-08-20 10:21:12
  * @FilePath: \react-learn\src\01-base\Navbar\index.js
  * @Description: 
  * 
@@ -24,7 +24,7 @@ export default class Navbar extends Component {
   //类属性 不用new 就能访问到
   static propTypes = {
     title:propTypes.string,
-    leftShow:propTypes.bool
+    leftShow:propTypes.bool.isRequired
   }
 
   static defaultProps = {

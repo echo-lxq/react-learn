@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-08-18 23:02:24
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-18 23:25:24
+ * @LastEditTime: 2022-08-20 10:19:42
  * @FilePath: \react-learn\src\01-base\Sidebar\index.js
  * @Description: 
  * 
@@ -45,14 +45,14 @@ function Sidebar(props){ //函数式组件接受属性
 }
 
 //属性验证
-Sidebar.defaultProps(
-    {}
-)
+// Sidebar.defaultProps(
+//     {}
+// )
 
-Sidebar.prototype(
-    {
-
-    }
-)
+// Sidebar.prototype(
+//     {
+        
+//     }
+// )
 
 export default Sidebar;

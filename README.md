@@ -1381,6 +1381,51 @@ BetterScroll是一款重点解决移动端(已支持PC)各种滚动场景需求�
 	
 	export default Sidebar;
 
+> isRequire使用
+
+使用isRequire当组件调用的时候不传指定属性会报错
+
+	 //类属性 不用new 就能访问到
+	  static propTypes = {
+	    title:propTypes.string,
+	    leftShow:propTypes.bool.isRequired
+	  }
+
+**但是！**
+
+如果指定参数设置 defaultProps的话，不会报错
+
+	static propTypes = {
+	    title:propTypes.string,
+	    leftShow:propTypes.bool.isRequired
+	  }
+	
+	  static defaultProps = {
+	    leftShow:true
+	  }
+
+
+### < script type="text/javascript">与< script type="text/babel"> ###
+
+创建dom可用的语法不同<br>**前者使用**document.createElement('H2',content)的方式
+
+**后者使用**<br>
+const vDom2 = < h2 id={myId.toUpperCase()}>{msg}< /h2>
+<br>
+来创建dom
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
