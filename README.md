@@ -1511,7 +1511,7 @@ const vDom2 = < h2 id={myId.toUpperCase()}>{msg}< /h2>
 	
 	}
 
-# 2.受控组件 #
+## 2.受控组件 ##
 
 > 例子：输入框跟状态绑定
 > 
@@ -1565,12 +1565,154 @@ const vDom2 = < h2 id={myId.toUpperCase()}>{msg}< /h2>
 	
 	}
 
-3.
+**受控组件的应用：**当指定值改变会影响其余小组件或样式改变的时候使用受控组件<br>
+**例子：**todolist受控组件，input->checkbox影响指定样式
 
+	import React, { Component } from 'react'
+	
+	import "./css/01-index.css"
+	
+	export default class App extends Component {
+	    myRef = React.createRef()
+	
+	    constructor(){
+	        super()
+	        this.state = {
+	            state: true,
+	            list:[
+	                {id:1,text:"111",isChecked:false},
+	                {id:2,text:"222",isChecked:false},
+	                {id:3,text:"333",isChecked:true}
+	            ],
+	            inputText:''
+	        }
+	    }
+	
+	    render() {
+	        
+	        return (
+	            <div>
+	                <input type="text" value={this.state.inputText} onChange = {this.inputChange} ref={this.myRef} />
+	                <button onClick={()=>{
+	                    this.addClick();
+	                }}>添加</button>
+	
+	                <ul>
+	                    {this.state.list.map((item,index)=>
+	                    <li key={item.id}>
+	                        <input type="checkbox" checked = {item.isChecked} onChange = {()=>{this.handleSelect(index)}}/>
+	                        <span style={{textDecoration:item.isChecked?"line-through":"blue"}}>{item.text}</span>
+	                        <button onClick={()=>{
+	                            this.handleDelClick(index);
+	                        }}>删除</button>
+	                    </li>)}
+	                </ul>
+	
+	                {/* 条件渲染部分 */}
+	                {/* 方案一 */}
+	                {this.state.list.length === 0 ?<div>条件渲染一</div>:null}
+	
+	                {/* 方案二 利用 && 前面为真后面才有机会执行 */}
+	                {this.state.list.length ===0 && <div>条件渲染二</div>}
+	
+	                {/* 方案三 已经创建好 动态控制class来控制显示与隐藏 */}
+	                <div className={this.state.list.length ===0?'':'hidden'}>条件渲染三</div>
+	
+	                <button onClick={()=>{this.setState({state:!this.state.state})}}>
+	                    {this.state.state?"收藏":"取消收藏"}
+	                </button>
+	
+	            </div>
+	        )
+	    }
+	
+	    //输入框内容改变
+	    inputChange = (evt) => {
+	        this.setState(
+	            {
+	                inputText:evt.target.value
+	            }
+	        )
+	    }
+	
+	    //点击添加按钮
+	    addClick = () => {
+	
+	        var newList = [...this.state.list]
+	
+	        newList.push({id:parseInt(Math.random()*1000),text:this.state.inputText,isChecked:false})
+	
+	        this.setState(
+	            {
+	                list:newList,
+	                inputText:''
+	            }
+	        )
+	    }
+	
+	    //点击删除按钮
+	    handleDelClick = (index) => {
+	        var delList = this.state.list.slice()
+	
+	        delList.splice(index,1)
+	
+	        this.setState(
+	            {
+	                list: delList
+	            }
+	        )
+	
+	    }
+	
+	    //点击选择按钮
+	    handleSelect = (index) => {
+	        let newList  = this.state.list.slice()
+	
+	        newList[index].isChecked = !this.state.list[index].isChecked
+	
+	        this.setState(
+	            {
+	                list:newList
+	            }
+	        )
+	
+	    }
+	
+	}
 
+### 总结 ###
+对于受控组件来说，输入的值始终有react的state驱动，可以将value传递给其他ui元素，或者通过其他事件处理函数重置，但这意味着需要编写更多的代码；
 
+注意：另外一种说法(广义范围的说法)，React组件的数据渲染是否被调用者传递的props完全控制，控制则为受控组件，否则为非受控组件。
 
+# 九.组件的通信方式 #
 
+## 1.父组件通信方式 ##
+**1.传递数据-字符串等(父传子)与传递方法-回调函数(子传父)**
+
+2.ref标记(父组件拿到子组件的引用，从而调用子组件的方法)
+
+> 例子：父组件调用子组件时候传入回调函数属性，子组件在哪调用在哪执行
+
+	//父组件传入属性(回调函数)
+	<Navbar event={
+            ()=>{
+                this.setState(
+                    {
+                        isShow:!this.state.isShow
+                    }
+                )
+            }
+        }></Navbar>
+
+	//子组件在需要地方调用父组件传入 回调函数 属性
+	<div style={{background:"red"}}>
+        <button onClick={()=>{
+           // 通知父组件让isSHow取反
+           this.props.event() //调用父组件的回调函数
+        }}>click</button>
+         <span>navbar</span>
+     </div>
 
 
 
