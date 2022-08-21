@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-18 11:25:54
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-21 10:43:56
+ * @LastEditTime: 2022-08-21 17:38:34
  * @FilePath: \react-learn\src\index.js
  * @Description: 
  * 
@@ -16,7 +16,7 @@ import ReactDOM from "react-dom/client";
 
 // import App from "./01-base/02-函数式组件";
 
-import App from "./01-base/21-复习整理";
+import App from "./01-base/21-受控todolist";
 
 const container = document.getElementById('root');
 
