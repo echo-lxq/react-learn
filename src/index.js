@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-18 11:25:54
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-21 22:43:41
+ * @LastEditTime: 2022-08-22 09:56:43
  * @FilePath: \react-learn\src\index.js
  * @Description: 
  * 
@@ -16,7 +16,7 @@ import ReactDOM from "react-dom/client";
 
 // import App from "./01-base/02-函数式组件";
 
-import App from "./02-advanced/01-子传递父";
+import App from "./02-advanced/02-非受控卖座选项卡";
 
 const container = document.getElementById('root');
 
