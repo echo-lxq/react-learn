@@ -16,7 +16,7 @@ import ReactDOM from "react-dom/client";
 
 // import App from "./01-base/02-函数式组件";
 
-import App from "./02-advanced/02-非受控卖座选项卡";
+import App from "./02-advanced/03-受控卖座选项卡";
 
 const container = document.getElementById('root');
 

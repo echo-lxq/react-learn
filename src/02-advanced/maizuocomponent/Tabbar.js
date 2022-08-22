@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-08-22 10:13:55
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-22 10:25:08
+ * @LastEditTime: 2022-08-22 22:58:14
  * @FilePath: \react-learn\src\02-advanced\maizuocomponent\Tabbar.js
  * @Description: 
  * 
@@ -52,6 +52,10 @@ export default class Tabbar extends Component {
         click_current:index
       }
     )
+
+    //通知父组件，修改父组件的状态
+    this.props.click_current(index)  
+
   }
 
 }
