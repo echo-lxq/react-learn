@@ -1721,6 +1721,10 @@ const vDom2 = < h2 id={myId.toUpperCase()}>{msg}< /h2>
 
 **2.ref标记(父组件拿到子组件的引用，从而调用子组件的方法)**
 
+> 在父组件中清楚子组件的input输入框的value值。this.refs.from.reset()
+
+
+
 
 
 
