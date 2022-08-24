@@ -1723,7 +1723,35 @@ const vDom2 = < h2 id={myId.toUpperCase()}>{msg}< /h2>
 
 > 在父组件中清楚子组件的input输入框的value值。this.refs.from.reset()
 
+(1)定义ref，并在调用自组件的时候传入
 
+	username = React.createRef()
+	password = React.createRef()
+	
+	<Field label="用户名" type="text" ref={this.username}></Field>
+	<Field label="密码" type="password" ref={this.password}></Field>
+
+(2)可以直接调用子组件value以及子组件定义的函数
+
+	<button onClick={()=>{
+        console.log(this.username.current.state.value,
+        this.password.current.state.value)
+    }}>登录</button>
+
+    <button onClick={()=>{
+        this.username.current.clear()
+        this.password.current.clear()
+    }}>重置</button>
+
+## 2.非父子组件通信方式 ##
+
+**(1)状态提升(中间人模式)**<br>
+
+React中的状态提升概括来说，就是将多个组件需要共享的状态提升到它们最近的父组件上，在父组件上改变这个状态然后通过props分发给子组件； **比较适合亲兄弟组件相互之间传递**
+
+## (2)发布订阅模式实现 ##
+
+## (3)context状态树传参 ##
 
 
 

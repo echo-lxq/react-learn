@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-18 11:25:54
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-23 22:23:41
+ * @LastEditTime: 2022-08-24 21:51:28
  * @FilePath: \react-learn\src\index.js
  * @Description: 
  * 
@@ -16,7 +16,7 @@ import ReactDOM from "react-dom/client";
 
 // import App from "./01-base/02-函数式组件";
 
-import App from "./02-advanced/04-父子通信版-表单域组件";
+import App from "./02-advanced/06-中间人模式";
 
 const container = document.getElementById('root');
 
