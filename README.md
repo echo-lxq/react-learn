@@ -1957,14 +1957,66 @@ React中的状态提升概括来说，就是将多个组件需要共享的状态
 
 ## (3)context状态树传参 ##
 
+> 定义全局context
 
+    const GlobalContext = React.createContext() //创建context对象
 
+> 生产者提供属性与回调方法
 
+		// 生产者
+        <GlobalContext.Provider value={{
+                call:"打电话",
+                sms:"短信",
+                info:this.state.info,
+                changeInfo:(value)=>{
+                    this.setState({
+                        info:value
+                    })
+                }
+            }}>
+            <div>
+            {this.state.filmList.map(
+                item=><FilmItem key={item.filmId} {...item}></FilmItem>
+            )}
+            <FilmDetail></FilmDetail>
+            </div>
+      </GlobalContext.Provider>
 
+> 消费者调用参数及回调方法
 
+	<GlobalContext.Consumer>
+            {
+                (value)=>
+                <div className="filmdetail">
+                    {value.info}
+                </div>
+                
+            }      
+        </GlobalContext.Consumer>
 
+### 关于插槽 ###
 
+>   1.为了复用（多种类型dom）-例：轮播(图片或视频)
+>   
+>   2.减少父子通信
 
+父组件调用子组件
+
+	<Child>
+        <div>1111</div>
+        <div>2222</div>
+        <div>3333</div>
+    </Child>
+
+子组件定义插槽
+
+	<div>
+       child
+       {/*  插槽 vue slot  */}
+       {this.props.children[0]}                
+       {this.props.children[1]}                
+       {this.props.children[2]}                
+    </div>
 
 
 
