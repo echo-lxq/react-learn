@@ -1749,6 +1749,79 @@ const vDom2 = < h2 id={myId.toUpperCase()}>{msg}< /h2>
 
 React中的状态提升概括来说，就是将多个组件需要共享的状态提升到它们最近的父组件上，在父组件上改变这个状态然后通过props分发给子组件； **比较适合亲兄弟组件相互之间传递**
 
+**例子部分代码：**<br>
+子组件通过父组件回调方法传递给父组件该改变值，父组件传递属性到其他子组件
+
+	import React, { Component } from 'react'
+	import axios from 'axios'
+	import './css/03-communication.css'
+	
+	export default class App extends Component {
+	
+	    constructor(){
+	        super()
+	        this.state = {
+	          filmList:[],
+	          info:''
+	        }
+	        axios.get('/test.json').then(
+	            res=>{
+	                this.setState(
+	                  {
+	                    filmList:res.data.data.films
+	                  }
+	                )
+	            }
+	        )
+	
+	    }
+	
+	  render() {
+	    return (
+	      <div>
+		  //父传子(回调函数，用于接收子组件传递参数)
+	      {this.state.filmList.map(
+	        item=><FilmItem onEvent={(value)=>{
+	          this.setState({
+	            info:value
+	          })
+	        }} key={item.filmId} {...item}></FilmItem>
+	      )}
+		  //子组件通过回调函数传参数给父组件之后，父组件通过属性传递给子组件
+	      <FilmDetail detail = {this.state.info}></FilmDetail>
+	      </div>
+	    )
+	  }
+	}
+	
+	class FilmItem extends Component{
+	  render(){
+	    // console.log(this.props)
+	    let {name,poster,grade,synopsis} = this.props
+	    return(
+	      <div className='filmitem' onClick={()=>{
+	        this.props.onEvent(synopsis)
+	      }}>
+	        <img src={poster} alt={name} />
+	        <span className='name'>{this.props.name}</span>
+	        <div>观众评分：{grade}</div>
+	      </div>
+	    )
+	  }
+	}
+	
+	class FilmDetail extends Component{
+	
+	  render(){
+	    return(
+	      <div className="filmdetail">
+	        {this.props.detail}
+	      </div>
+	    )
+	  }
+	
+	}
+
 ## (2)发布订阅模式实现 ##
 
 ## (3)context状态树传参 ##
