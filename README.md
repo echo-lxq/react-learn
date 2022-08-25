@@ -1824,6 +1824,137 @@ React中的状态提升概括来说，就是将多个组件需要共享的状态
 
 ## (2)发布订阅模式实现 ##
 
+> js实现简单的发布订阅模式
+
+	var bus = {
+	    list:[],
+	    //订阅
+	    subscribe(callback){
+	
+	        this.list.push(callback)
+	
+	    },
+	
+	    //发布
+	    publish(){
+	        //遍历所有list，将回调函数执行
+	        this.list.forEach(callback=>{
+	            callback&&callback();
+	        })
+	    }
+	}
+	
+	//订阅
+	bus.subscribe(()=>{
+	    console.log("订阅1")
+	});
+	bus.subscribe(()=>{
+	    console.log("订阅2")
+	});
+	
+	//发布
+	bus.publish();
+
+> react利用发布订阅模式实通信
+
+	import React, { Component } from 'react'
+	import axios from 'axios'
+	import './css/03-communication.css'
+	
+	var bus = {
+	    list:[],
+	    //订阅
+	    subscribe(callback){
+	
+	        this.list.push(callback)
+	
+	    },
+	
+	    //发布
+	    publish(content){
+	        //遍历所有list，将回调函数执行
+	        this.list.forEach(callback=>{
+	            callback&&callback(content);
+	        })
+	    }
+	}
+	
+	
+	export default class App extends Component {
+	
+	    constructor(){
+	        super()
+	        this.state = {
+	          filmList:[],
+	        }
+	        axios.get('/test.json').then(
+	            res=>{
+	                this.setState(
+	                  {
+	                    filmList:res.data.data.films
+	                  }
+	                )
+	            }
+	        )
+	
+	    }
+	
+	  render() {
+	    return (
+	      <div>
+	      {this.state.filmList.map(
+	        item=><FilmItem key={item.filmId} {...item}></FilmItem>
+	      )}
+	      <FilmDetail></FilmDetail>
+	      </div>
+	    )
+	  }
+	}
+	
+	class FilmItem extends Component{
+	  render(){
+	    // console.log(this.props)
+	    let {name,poster,grade,synopsis} = this.props
+	    return(
+	      <div className='filmitem' onClick={()=>{
+	        // console.log(synopsis)
+	        bus.publish(synopsis)
+	      }}>
+	        <img src={poster} alt={name} />
+	        <span className='name'>{this.props.name}</span>
+	        <div>观众评分：{grade}</div>
+	      </div>
+	    )
+	  }
+	}
+	
+	class FilmDetail extends Component{
+	
+	    constructor(){
+	        super()
+	        bus.subscribe((content)=>{
+	            this.setState(
+	                {
+	                    content:content
+	                }
+	            )
+	        })
+	        this.state = {
+	            content:''
+	        }
+	    }
+	
+	  render(){
+	    return(
+	      <div className="filmdetail">
+	        {this.state.content}
+	      </div>
+	    )
+	  }
+	
+	}
+
+
 ## (3)context状态树传参 ##
 
 
