@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-18 11:25:54
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-25 22:41:44
+ * @LastEditTime: 2022-08-26 08:15:34
  * @FilePath: \react-learn\src\index.js
  * @Description: 
  * 
@@ -16,7 +16,7 @@ import ReactDOM from "react-dom/client";
 
 // import App from "./01-base/02-函数式组件";
 
-import App from "./02-advanced/11-插槽版抽屉";
+import App from "./02-advanced/00-间接复习";
 
 const container = document.getElementById('root');
 

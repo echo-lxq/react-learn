@@ -1826,6 +1826,9 @@ React中的状态提升概括来说，就是将多个组件需要共享的状态
 
 > js实现简单的发布订阅模式
 
+> **这里的callback && callback(data);相当于 if callback {callback()};
+如果回调函数存在，则执行该回调函数。**
+
 	var bus = {
 	    list:[],
 	    //订阅

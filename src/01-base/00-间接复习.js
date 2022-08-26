@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-25 08:13:51
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-09 10:10:13
+ * @LastEditTime: 2022-08-26 08:32:22
  * @FilePath: \react-learn\src\01-base\00-间接复习.js
  * @Description: 
  * 
@@ -192,3 +192,45 @@ class App extends Component{
 }
 
 export default App
+
+/**
+ * 简单的发布订阅模式
+ */
+
+let bus = {
+
+    list:[],
+
+    //订阅
+    subscribe(callback){
+        this.list.push(callback)
+    },
+
+    publish(Content){
+        this.list.forEach(callback => {
+            callback&&callback(Content)
+        });
+    }
+
+}
+
+bus.subscribe(
+    (content)=>{
+        console.log("订阅1",content)
+    }
+)
+
+bus.subscribe(
+    (content)=>{
+        console.log("订阅2",content)
+    }
+)
+
+bus.subscribe(
+    (content)=>{
+        console.log("订阅2",content)
+    }
+)
+
+
+bus.publish("测试发布")
