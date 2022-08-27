@@ -2025,9 +2025,64 @@ React中的状态提升概括来说，就是将多个组件需要共享的状态
 
 ## 1.初始化阶段 ##
 
-- componentWillMount: render之前最后一次修改状态的机会
+> 生命周期函数 - 钩子函数
+
+- componentWillMount: render之前最后一次修改状态的机会<br>
+1.将要挂载,拿不到dom - 在这里可以进行状态初始化
+
 - render：只能访问this.props和this.state，不允许修改状态和DOM输出
-- componentDidMount:成功render并渲染完成真是DOM之后触发，可以修改DOM
+- componentDidMount:成功render并渲染完成真是DOM之后触发，可以修改DOM<br>
+1.数据请求axios/ajax<br>
+2.订阅发布模式中的订阅函数的调用
+
+例：
+
+	import React, { Component } from 'react'
+	
+	export default class App extends Component {
+	
+	    state = {
+	        myName:"WeiShan"
+	    }
+	
+	    //将要挂载,拿不到dom - 在这里可以进行状态初始化
+	    componentWillMount(){
+	        console.log("will mount",this.state.myName)
+	
+	        //第一次上树前的最后一次状态修改机会
+	
+	        this.setState(
+	            {
+	                myName:"WeiShanVerify"
+	            }
+	        )
+	
+	        //初始化数据的作用。
+	
+	    }
+	
+	    //已经渲染完，可以拿到真实的dom节点
+	    componentDidMount(){
+	        console.log("did mount")
+	
+	        //数据请求axios/ajax
+	        //订阅发布模式中的订阅函数的调用
+	    }
+	
+	  render() {
+	    console.log("render")
+	    return (
+	      <div>
+	        <span id="my_name">
+	            {this.state.myName}
+	        </span>
+	      </div>
+	    )
+	  }
+	}
+
+**关于willmount生命周期函数弃用：**<br>
+react16.2版本之后react算法更改之后，
 
 ## 2.运行中阶段 ##
 
