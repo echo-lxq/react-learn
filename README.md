@@ -2084,6 +2084,12 @@ React中的状态提升概括来说，就是将多个组件需要共享的状态
 **关于willmount生命周期函数弃用：**<br>
 react16.2版本之后react算法更改之后，
 
+1.可以在前面加UNSAFE_ 变成 UNSAFE_componentWillMount
+
+*关于为什么不安全：*<br>
+*fiber技术：优化虚拟dom递树算法，高优先级任务打断低优先级任务，willmount忙着找到哪些状态需要更新，能被打断，更新dom状态的过程是不能被打断的，被高优先级任务打断之后会再执行一次*
+
+
 ## 2.运行中阶段 ##
 
 - componentWillReceiveProps：父组件修改属性触发
