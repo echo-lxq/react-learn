@@ -2096,7 +2096,80 @@ react16.2版本之后react算法更改之后，
 - shouldComponentUpdate：返回false会阻止render调用
 - componentWillUpdate：不能修改属性和状态
 - render：只能访问this.props和this.state,不允许修改状态和DOM输出
-- componentDidUpdate：可以修改DOM
+- componentDidUpdate(prevProps,prevState)：可以修改DOM,两个形参为老属性与老状态
+
+**例子：主DidUpdate**<br>
+在本地读取数据的时候，第一次初始化完成就可以使用didmount来进行操作dom，使用异步调用之后重新渲染数据，使用DidUpdate来操作dom
+
+*缺点didupdate*<br>
+*会执行多次，每次setstate之后都回调用didupdate*
+
+import axios from 'axios'
+import React, { Component } from 'react'
+import BetterScroll from 'better-scroll'
+
+export default class App extends Component {
+    state = {
+      myName:"WeiShan",
+      list:[]
+    }
+    componentDidMount(){
+        axios.get("/test.json").then(res=>{
+            this.setState({
+                list:res.data.data.films
+            })
+            console.log("调用",document.getElementById('warpper'))  
+            //这个不好用  本地读取数据 不是第一次初始化的时候用下面didUpdate
+            // new BetterScroll('#warpper')
+        })
+        
+        
+    }
+    render() {
+        return (
+        <div>
+            <button onClick={()=>{
+                this.setState(
+                    {
+                        myName:"TeiChui"
+                    }
+                )
+            }}>点击</button>
+            
+            <span id="my_name">{this.state.myName}</span>
+
+            <div id="warpper" style={{
+                    height:"80px",
+                    overflow:"hidden",
+                    background:"yellow"
+                }}>
+                <ul>
+                    {this.state.list.map(item=><li key={item.filmId}>{item.name}</li>)}
+                </ul>
+            </div>
+
+        </div>
+        )
+    }
+
+    UNSAFE_componentWillUpdate(){
+        console.log("componentWillUpdate",document.getElementById('my_name').innerHTML)
+    }
+
+    componentDidUpdate(prevProps,prevState){
+        console.log("commponentDidUpdate",document.getElementById('my_name').innerHTML)
+        console.log(prevState.list)
+        //更新后，想要获取dom节点 ， 更新
+
+        if(prevState.list.length === 0){
+            new BetterScroll('#warpper')
+            console.log("执行操作")
+        }
+    }
+
+}
+
+
 
 ## 3.销毁阶段 ##
 
