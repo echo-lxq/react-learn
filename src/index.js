@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-18 11:25:54
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-08-30 08:14:48
+ * @LastEditTime: 2022-08-30 22:38:21
  * @FilePath: \react-learn\src\index.js
  * @Description: 
  * 
@@ -16,7 +16,7 @@ import ReactDOM from "react-dom/client";
 
 // import App from "./01-base/02-函数式组件";
 
-import App from "./02-advanced/16-生命周期-更新阶段2案例";
+import App from "./02-advanced/18-生命周期-更新阶段3案例";
 
 const container = document.getElementById('root');
 

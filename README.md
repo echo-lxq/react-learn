@@ -2098,7 +2098,7 @@ react16.2版本之后react算法更改之后，
 - render：只能访问this.props和this.state,不允许修改状态和DOM输出
 - componentDidUpdate(prevProps,prevState)：可以修改DOM,两个形参为老属性与老状态
 
-**例子：主DidUpdate**<br>
+### 例子：主DidUpdate <br>
 在本地读取数据的时候，第一次初始化完成就可以使用didmount来进行操作dom，使用异步调用之后重新渲染数据，使用DidUpdate来操作dom
 
 *缺点didupdate*<br>
@@ -2169,7 +2169,7 @@ react16.2版本之后react算法更改之后，
 	
 	}
 
-**shouldComponentUpdate -- 性能优化函数**<br>
+### shouldComponentUpdate -- 性能优化函数 <br>
 > 判断什么时候需要更新状态 -- scu
 
 	//输入scu回车 可以生成以下函数
@@ -2190,6 +2190,62 @@ react16.2版本之后react算法更改之后，
 *this.state  老的状态  - 不要直接修改状态(this.state.list = newState)*
 
 *nextState  新的状态*
+
+### componentWillReceiveProps <br>
+*最先获得父组件传来的属性，可以利用属性进行ajax或者逻辑处理
+把属性转化成孩子自己的状态*
+
+**使用：**
+
+	// 用于子组件
+    UNSAFE_componentWillReceiveProps(nextProps){
+        console.log("willReceiveProps")
+        //获取到的属性为老属性、
+        console.log(this.props.text)
+        //新的属性
+        console.log(nextProps.text)
+        
+        //最先获得父组件传来的属性，可以利用属性进行ajax或者逻辑处理
+        //把属性转化成孩子自己的状态
+        this.setState(
+            {
+                title:nextProps.text+"WeiShan"
+            }
+        )
+    }
+
+**案例：**<br>
+
+> 子组件根据传来属性请求响应数据(初始化用willmount，后续改变用willreceiveprops)
+
+	class FilmList extends Component{
+	
+	    //第一次 只会在初始化阶段执行的函数
+	    UNSAFE_componentWillMount(){
+	        if(this.props.type === 1){
+	            console.log("请求正在热映的数据")
+	        }else{
+	            console.log("请求即将上映的数据")
+	        }
+	    }
+	
+	    render(){
+	        return(
+	            <div>
+	                FilmList
+	            </div>
+	        )
+	    }
+	    //后续变化
+	    UNSAFE_componentWillReceiveProps(nextProps){
+	        if(nextProps.type ===1){
+	            console.log("请求正在热映的数据")
+	        }else{
+	            console.log("请求即将上映的数据")
+	        }
+	    }
+	}
+
 
 
 
