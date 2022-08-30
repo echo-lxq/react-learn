@@ -2169,7 +2169,7 @@ react16.2版本之后react算法更改之后，
 	
 	}
 
-**shouldComponentUpdate**<br>
+**shouldComponentUpdate -- 性能优化函数**<br>
 > 判断什么时候需要更新状态 -- scu
 
 	//输入scu回车 可以生成以下函数
@@ -2184,7 +2184,12 @@ react16.2版本之后react算法更改之后，
 	    
 	  }
 
+**shouldComponentUpdate案例：**<br>
+举例了父组件改变某个值影响子组件重新渲染，当子组件内容过多的时候，考虑性能优化，不优化每次一state更新都导致孩子render执行，在scu中进行属性与nextProps对比,如果上一次两个属性 或者 下一次两个属性相等的情况下，说明有属性变动，则修改；
 
+*this.state  老的状态  - 不要直接修改状态(this.state.list = newState)*
+
+*nextState  新的状态*
 
 
 

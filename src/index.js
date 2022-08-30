@@ -16,7 +16,7 @@ import ReactDOM from "react-dom/client";
 
 // import App from "./01-base/02-函数式组件";
 
-import App from "./02-advanced/15-生命周期-更新阶段2";
+import App from "./02-advanced/16-生命周期-更新阶段2案例";
 
 const container = document.getElementById('root');
 
