@@ -2104,70 +2104,87 @@ react16.2版本之后react算法更改之后，
 *缺点didupdate*<br>
 *会执行多次，每次setstate之后都回调用didupdate*
 
-import axios from 'axios'
-import React, { Component } from 'react'
-import BetterScroll from 'better-scroll'
+	import axios from 'axios'
+	import React, { Component } from 'react'
+	import BetterScroll from 'better-scroll'
+	
+	export default class App extends Component {
+	    state = {
+	      myName:"WeiShan",
+	      list:[]
+	    }
+	    componentDidMount(){
+	        axios.get("/test.json").then(res=>{
+	            this.setState({
+	                list:res.data.data.films
+	            })
+	            console.log("调用",document.getElementById('warpper'))  
+	            //这个不好用  本地读取数据 不是第一次初始化的时候用下面didUpdate
+	            // new BetterScroll('#warpper')
+	        })
+	        
+	        
+	    }
+	    render() {
+	        return (
+	        <div>
+	            <button onClick={()=>{
+	                this.setState(
+	                    {
+	                        myName:"TeiChui"
+	                    }
+	                )
+	            }}>点击</button>
+	            
+	            <span id="my_name">{this.state.myName}</span>
+	
+	            <div id="warpper" style={{
+	                    height:"80px",
+	                    overflow:"hidden",
+	                    background:"yellow"
+	                }}>
+	                <ul>
+	                    {this.state.list.map(item=><li key={item.filmId}>{item.name}</li>)}
+	                </ul>
+	            </div>
+	
+	        </div>
+	        )
+	    }
+	
+	    UNSAFE_componentWillUpdate(){
+	        console.log("componentWillUpdate",document.getElementById('my_name').innerHTML)
+	    }
+	
+	    componentDidUpdate(prevProps,prevState){
+	        console.log("commponentDidUpdate",document.getElementById('my_name').innerHTML)
+	        console.log(prevState.list)
+	        //更新后，想要获取dom节点 ， 更新
+	
+	        if(prevState.list.length === 0){
+	            new BetterScroll('#warpper')
+	            console.log("执行操作")
+	        }
+	    }
+	
+	}
 
-export default class App extends Component {
-    state = {
-      myName:"WeiShan",
-      list:[]
-    }
-    componentDidMount(){
-        axios.get("/test.json").then(res=>{
-            this.setState({
-                list:res.data.data.films
-            })
-            console.log("调用",document.getElementById('warpper'))  
-            //这个不好用  本地读取数据 不是第一次初始化的时候用下面didUpdate
-            // new BetterScroll('#warpper')
-        })
-        
-        
-    }
-    render() {
-        return (
-        <div>
-            <button onClick={()=>{
-                this.setState(
-                    {
-                        myName:"TeiChui"
-                    }
-                )
-            }}>点击</button>
-            
-            <span id="my_name">{this.state.myName}</span>
+**shouldComponentUpdate**<br>
+> 判断什么时候需要更新状态 -- scu
 
-            <div id="warpper" style={{
-                    height:"80px",
-                    overflow:"hidden",
-                    background:"yellow"
-                }}>
-                <ul>
-                    {this.state.list.map(item=><li key={item.filmId}>{item.name}</li>)}
-                </ul>
-            </div>
+	//输入scu回车 可以生成以下函数
+	  shouldComponentUpdate(nextProps,nextState){
+	    // return false;  //阻止更新
+	    //return true; //应该更新
+	    if(JSON.stringify(this.state) !== JSON.stringify(nextState)){
+	        return true;
+	    }
+	        
+	    return false;
+	    
+	  }
 
-        </div>
-        )
-    }
 
-    UNSAFE_componentWillUpdate(){
-        console.log("componentWillUpdate",document.getElementById('my_name').innerHTML)
-    }
-
-    componentDidUpdate(prevProps,prevState){
-        console.log("commponentDidUpdate",document.getElementById('my_name').innerHTML)
-        console.log(prevState.list)
-        //更新后，想要获取dom节点 ， 更新
-
-        if(prevState.list.length === 0){
-            new BetterScroll('#warpper')
-            console.log("执行操作")
-        }
-    }
-
-}
 
 
 
