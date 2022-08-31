@@ -2291,34 +2291,68 @@ componentWillUnmount：在删除组件之前进行清理操作，比如计时器
 
 *功能模块-用户点击父组件中的按钮，子组件处理父组件传来的属性，异步请求不同接口的数据*
 
-	class FilmList extends Component{
-	
-	    //第一次 只会在初始化阶段执行的函数
-	    UNSAFE_componentWillMount(){
-	        if(this.props.type === 1){
-	            console.log("请求正在热映的数据")
-	        }else{
-	            console.log("请求即将上映的数据")
-	        }
-	    }
-	
-	    render(){
-	        return(
-	            <div>
-	                FilmList
-	            </div>
-	        )
-	    }
-	    //后续变化
-	    UNSAFE_componentWillReceiveProps(nextProps){
-	        if(nextProps.type ===1){
-	            console.log("请求正在热映的数据")
-	        }else{
-	            console.log("请求即将上映的数据")
-	        }
-	    }
-	}
+	componentDidMount(){
+        if(this.props.type === 1){
+            console.log("请求正在热映的数据")
+        }else{
+            console.log("请求即将上映的数据")
+        }
+    }
 
-(2) 
+    //这里只更新状态
+    static getDerivedStateFromProps(nextProps){
+        console.log("执行了 getDerivedStateFromProps")
+        //进行异步请求之后
+        return {
+            type:nextProps.type
+        }
+    }
+
+    componentDidUpdate(prevProps,prevState){
+        if(this.state.type === prevState.type){
+            return
+        }
+        console.log(prevState.type,this.state.type)
+        if(this.state.type === 1){
+            console.log("请求正在热映的数据")
+        }else{
+            console.log("请求即将上映的数据")
+        }
+    }
+
+(2) **getSnapShotBeforeUpdate**<br> 
+取代了componentWillUpdate, 触发时间为update发生的时候，再**render之后dom渲染之前**返回一个值，作为componentDidUpdate的第三个参数。
+
+> 更新执行顺序 - render->getSnapshotBeforeUpdate(返回一个值到didupdate第三个参数)->componentDidUpdate
+
+**案例**<br>
+记录滚动距离实现无感知来消息
+
+	//获取容器高度
+	  getSnapshotBeforeUpdate(){
+	        console.log(this.myRef.current.scrollHeight)
+	        return this.myRef.current.scrollHeight
+	  }
+	
+	  componentDidUpdate(prevProps,prevState,value){
+	        console.log(this.myRef.current.scrollHeight)
+	        this.myRef.current.scrollTop += this.myRef.current.scrollHeight-value
+	  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # 学成之后关于vite #
