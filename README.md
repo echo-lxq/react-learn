@@ -2253,11 +2253,72 @@ react16.2版本之后react算法更改之后，
 
 componentWillUnmount：在删除组件之前进行清理操作，比如计时器和事件监听器
 
+	//被销毁时候调用这个生命周期
+    //组件被销毁，组件内部的监听会销毁，但是绑定在window窗口的事件监听不会销毁 - 定时器等
+    componentWillUnmount(){
+        console.log("componentWillUnmount")
+        window.onresize = null
+        clearInterval(this.timer)
+    }
 
+### 老生命周期的问题 ###
 
+(1)componentWillMount,在ssr中这个方法将会被多次调用，所以会重复触发多遍，同时在这里如果绑定事件，将无法解绑，导致内存泄露，变得不够安全高效逐步废弃。
 
+(2)componentWillReceiveProps外部组件多次频繁更新传入多次不同的props，会导致不必要的异步请求
 
+(3)componentWillUpdate, 更新前记录DOM状态，可能会做一些处理，与componentDidUpdate相隔时间如果过长，会导致 状态不太信
 
+### 新生命周期的替代 ###
 
+(1) **getDerivedStateFromProps**<br>
+第一次的初始化组件以及后续的更新过程中(包括自身状态更新以及父转子)，返回一个对象作为新的state，返回null则说明不需要在这里更新state
+
+**使用**
+
+	//这个是类方法 componentWillMount
+    static getDerivedStateFromProps(nextProps,nextState){
+        console.log("123",nextState)
+        //return对象会跟state合并
+        return {
+            myName:nextState.myName.substring(0,1).toUpperCase()+nextState.myName.substring(1),
+        };
+    }
+
+**案例**
+
+> 使用getDerivedStateFromProps 代替 UNSAFE_componentWillReceiveProps实现后续属性变化之后重新修改页面信息
+
+*功能模块-用户点击父组件中的按钮，子组件处理父组件传来的属性，异步请求不同接口的数据*
+
+	class FilmList extends Component{
+	
+	    //第一次 只会在初始化阶段执行的函数
+	    UNSAFE_componentWillMount(){
+	        if(this.props.type === 1){
+	            console.log("请求正在热映的数据")
+	        }else{
+	            console.log("请求即将上映的数据")
+	        }
+	    }
+	
+	    render(){
+	        return(
+	            <div>
+	                FilmList
+	            </div>
+	        )
+	    }
+	    //后续变化
+	    UNSAFE_componentWillReceiveProps(nextProps){
+	        if(nextProps.type ===1){
+	            console.log("请求正在热映的数据")
+	        }else{
+	            console.log("请求即将上映的数据")
+	        }
+	    }
+	}
+
+(2) 
 
 # 学成之后关于vite #
