@@ -2451,8 +2451,42 @@ PureComponent会帮你比较新props跟旧的props，新的state和老的state(�
 
 
 
-# 十一. #
+# 十一.React Hooks#
 
+## 1.使用hooks理由 ##
+
+1. 高阶组件为了复用，导致代码层级复杂
+1. 生命周期的复杂
+1. 携程functional组件，无状态组件，因为需要状态，又改成class，成本高
+
+**useState(保存组件状态)**
+
+const [state,setstate] = usestate(initialstate)
+
+例子： **RFC + tab** 快速生成函数式组件
+
+以todolist为例子，使用函数式组件加上钩子函数 useState 完成
+
+注意是，不用ref，使用状态绑定输入框
+
+	var [text,setText] = useState('')
+	var handleChange = (evt)=>{
+        setText(evt.target.value)
+    }
+	<input type="text" onChange={handleChange} value = {text}/>
+
+**useEffect(处理副作用)和useLayoutEffect(同步执行副作用)**
+
+*Function Component 不存在生命周期，所以不要把类组件的生命周期来与之对号入座
+
+	useEffect(()=>{
+		//effect
+		return ()=>{
+			//cleanup	
+		}
+	},[依赖状态；空数组表示不依赖])
+
+	
 
 
 
