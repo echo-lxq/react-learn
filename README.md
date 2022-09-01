@@ -2339,10 +2339,116 @@ componentWillUnmount：在删除组件之前进行清理操作，比如计时器
 	        this.myRef.current.scrollTop += this.myRef.current.scrollHeight-value
 	  }
 
+### react中性能优化的方案 ###
+
+1.shouldComponentUpdate
+
+控制组件自身或者子组件是否需要更新，尤其在子组件非常多的情况下，需要进行优化
+
+2.PureComponent
+
+PureComponent会帮你比较新props跟旧的props，新的state和老的state(值相等，或者对象含有相同的属性、且属性相等)，决定shouComponentUpdate返回true或者false，从而决定要不要render function。
+
+**注意：**
+
+如果state或props【永远都会变】，那PureComponent并不会比较块，因为shallowEqual也需要花时间。
+
+例子： - import PureComponent 并继承
+
+	import React, { PureComponent } from 'react'
+	
+	export default class App extends PureComponent {
+	    state = {
+	        myName:"WeiShan"
+	    }
+	  render() {
+	    console.log("render")
+	    return (
+	      <div>
+	        <button onClick={()=>{
+	            this.setState(
+	                {
+	                    myName:"xiaoming"
+	                }
+	            )
+	        }}>点击</button>
+	        <span>{this.state.myName}</span>
+	      </div>
+	    )
+	  }
+	
+	  componentDidUpdate(){
+	    console.log('componentDidUpdate')
+	  }
+	}
+
+### 轮播 - swiper-造轮子与使用 ###
+
+> 同步及异步使用
+
+**异步：**
+
+	import React, { Component } from 'react'
+	
+	import Swiper,{Navigation,Pagination} from 'swiper'
+	
+	import 'swiper/css/bundle';
+	import 'swiper/css';
+	import 'swiper/css/navigation';
+	import 'swiper/css/pagination';
+	
+	Swiper.use([Navigation,Pagination])
+	
+	export default class App extends Component {
+	    state = {
+	        list:[]
+	    }
+	    componentDidMount() {
+	
+	        setTimeout(
+	            ()=>{
+	                this.setState(
+	                    {
+	                        list:['aaa','bbb','ccc']
+	                    }
+	                )
+	            },1000
+	        )        
+	     }
+	
+	    //方案一、这里可以获取数据，并且更新dom完成渲染之后
+	     componentDidUpdate(){
+	        new Swiper('.swiper',{
+	            pagination:{
+	                el:'.swiper-pagination'
+	            }
+	        })
+	     }
+	  render() {
+	    return (
+	      <div>
+	
+	        <div className="swiper" style={{
+	            height:"200px",
+	            background:"yellow"
+	        }}>
+	            <div className="swiper-wrapper">
+	                {this.state.list.map((item,index)=>
+	                    <div key={index} className="swiper-slide">{item}</div>
+	                )}
+	            </div>
+	            <div className="swiper-pagination"></div>
+	        </div>    
+	    
+	      </div>
+	    )
+	  }
+	}
 
 
 
 
+# 十一. #
 
 
 
