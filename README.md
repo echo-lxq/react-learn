@@ -2445,6 +2445,9 @@ PureComponent会帮你比较新props跟旧的props，新的state和老的state(�
 	  }
 	}
 
+> 封装一个自己得轮播组件：
+
+将组件轮播部分中轮播内容做成插槽，将插槽部分中含有class再做成SwiperItem组件中的插槽，引入Swipper组件可实现多内容轮播，将swipper组件中new 可选的参数做成属性(例如loop)，在使用自己定义的组件的时候传入对应的属性即可实现组件的复用多样性。
 
 
 
