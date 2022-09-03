@@ -2486,6 +2486,27 @@ const [state,setstate] = usestate(initialstate)
 		}
 	},[依赖状态；空数组表示不依赖])
 
+使用了某个变量，却没有申明在依赖中，当依赖的变量改变时，useEffect也不会再次执行，eslint会报警告。
+
+**例子：子组件依赖于属性的值改变**
+
+	function FilmList(props) {
+	    const [list,setList] = useState([])
+	    useEffect(()=>{
+	        if(props.type === 1){
+	            console.log("请求正在热映的数据")
+	            setList(["正在热映数据"])
+	        }else{
+	            console.log("请求即将上映的数据")
+	            setList(["即将上映数据"])
+	        }
+	    },[props.type])
+	    return (
+	      <div>05-useEffect2案例-{list}</div>
+	    )
+	  }
+
+
 	
 
 
