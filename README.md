@@ -2459,7 +2459,7 @@ PureComponent会帮你比较新props跟旧的props，新的state和老的state(�
 1. 生命周期的复杂
 1. 携程functional组件，无状态组件，因为需要状态，又改成class，成本高
 
-**useState(保存组件状态)**
+### useState(保存组件状态) -- 可以使用多个 ###
 
 const [state,setstate] = usestate(initialstate)
 
@@ -2506,11 +2506,67 @@ const [state,setstate] = usestate(initialstate)
 	    )
 	  }
 
+**类似于生命周期销毁后执行内容**
 
+**例：在最后return个匿名函数，仅限于依赖为空的时候**
+
+	function Child(){
 	
+	    useEffect(()=>{
+	        window.onresize = () =>{
+	            console.log('resize')
+	        }
+	
+	        return()=>{
+	            console.log("组件销毁") //没有依赖的时候
+	            window.onresize = null;
+	        }
+	
+	    },[])
+	
+	    useEffect(()=>{
+	
+	       var timer = setInterval(()=>{
+	            console.log("111")
+	        },2000)
+	
+	        return()=>{
+	            console.log("组件销毁") //没有依赖的时候
+	            clearInterval(timer)
+	        }
+	
+	    },[])
+	
+	    return(
+	        <div>Child</div>
+	    )
+	}
 
+### useLayoutEffect ###
 
+在实际使用时，如果想避免 **页面抖动** (在useEffect里面修改DOM很有可能出现)的话，可以把需要操作DOM的代码放在useLayoutEffect里。
+	
+> userEffect和useLayoutEffect有什么区别？
 
+*简单来说就是调用的时机不同，userLayoutEffect和原来componentDidMount&componentDidUpdate一致，在react完成DOM更新后马上同步调用的代码，会阻塞页面渲染。而useEffect是会在整个页面渲染完才会调用的代码。*
+
+### useCallback(记忆函数) ###
+
+防止因为组件重新渲染，导致方法被重新创建，起到缓存作用，只有第二个参数变化了，才重新声明一次。
+
+	var changeName = useCallback(
+        (newName)=>{
+           console.log(newName)
+        },[name]
+    )
+	<button onClick={()=>{changeName("xiaoming")}}>点击</button>
+	//只有name改变之后，这个函数才会重新声明一次
+	//如果传入空数组，那么就是第一次创建后就被缓存，如果name后期改变了，拿到的还是老的name
+	//如果不传第二个参数，每次都会重新生命一次，拿到的是最新的name
+
+# 关于 useState缓存了状态以及useCallback缓存函数，实现原理-闭包(可以将变量永驻内存) #
+
+### useMemo记忆组件 ###
 
 
 
