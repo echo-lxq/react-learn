@@ -2,31 +2,30 @@
  * @Author: WeiShan
  * @Date: 2022-09-04 10:36:53
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-04 10:36:56
+ * @LastEditTime: 2022-09-04 21:34:28
  * @FilePath: \react-learn\src\03-hooks\10-useRef.js
  * @Description: 
  * 
  * Copyright (c) 2022 by WeiShan/xls, All Rights Reserved. 
  */
 import React from 'react'
+import { useRef } from 'react'
 import { useState } from 'react'
 
 export default function App() {
 
-    var [text,setText] = useState('')
-
     var [list,setList] = useState(['12','13'])
 
-    var addList = ()=>{
-        setList([...list,text])
-    }
+    const myText = useRef() //React.createRef()
 
-    var handleChange = (evt)=>{
-        setText(evt.target.value)
+    var addList = ()=>{
+        setList([...list,myText.current.value])
+        // setList([...list,text])
     }
 
     var clearInput = ()=>{
-        setText("")
+        // setText("")
+        myText.current.value = ''
     }
 
     var delList = (index)=>{
@@ -38,7 +37,7 @@ export default function App() {
   return (
     <div>
         
-        <input type="text" onChange={handleChange} value = {text}/>
+        <input type="text" ref={myText}/>
         
         <button onClick={()=>{
             addList()

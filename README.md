@@ -2588,11 +2588,63 @@ useCallback(fn,inputs) is equivalent to useMemo(()=>fn,inputs)
 	const mySwiper = useRef(null);
 	<Swiper ref = {mySwiper} />
 
+# 如何保存变量-在react hooks 体系中？ #
+### 1.useState ###
+### 2.useRef ###
+
+	 //2的例子
+	 var myCount = useRef(0)
+	
+	  let handleClick = ()=>{
+	    setCount(count+1)
+	    myCount.current++
+	  }
+
+
 ### useReducer和useContext(减少组件层级) ###
 
+使用**useContext**之前：
 
+	return(
+        // 消费者
+        <GlobalContext.Consumer>
+            {
+                //在形参中获取公共服务
+                (value)=>{
+                    // console.log(value)
+                    return(
+                        <div className='filmitem' onClick={()=>{
+                            // this.props.onEvent(synopsis)
+                            value.changeInfo(synopsis)
+                        }}>
+                            <img src={poster} alt={name} />
+                            <span className='name'>{props.name}</span>
+                            <div>观众评分：{grade}</div>
+                        </div>
+                    )
+                }
+            }
+        </GlobalContext.Consumer>
+    )
 
+使用**useContext**之后： -**useContext使用案例**
 
+	const value = useContext(GlobalContext)
+
+    return(
+        <div className='filmitem' onClick={()=>{
+            // this.props.onEvent(synopsis)
+            value.changeInfo(synopsis)
+        }}>
+            <img src={poster} alt={name} />
+            <span className='name'>{props.name}</span>
+            <div>观众评分：{grade}</div>
+        </div>
+    )
+
+### useReducer - 先有Redux，hooks将其中一些理念引入到当中来 ###
+
+解决问题：
 
 
 
