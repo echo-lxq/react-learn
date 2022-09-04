@@ -2564,9 +2564,34 @@ const [state,setstate] = usestate(initialstate)
 	//如果传入空数组，那么就是第一次创建后就被缓存，如果name后期改变了，拿到的还是老的name
 	//如果不传第二个参数，每次都会重新生命一次，拿到的是最新的name
 
-# 关于 useState缓存了状态以及useCallback缓存函数，实现原理-闭包(可以将变量永驻内存) #
+# 关于 useState缓存了状态以及useCallback缓存函数，实现原理-闭包(可以将变量永驻内存) ，但也会导致内存泄露#
 
 ### useMemo记忆组件 ###
+
+useCallback的功能完全可以由useMemo所取代，如果你想通过useMemo返回一个记忆函数也是完全可以的。
+
+useCallback(fn,inputs) is equivalent to useMemo(()=>fn,inputs)
+
+唯一区别是:**useCallback不会执行第一个参数函数，而是将它返回给你，而useMemo会执行第一个函数并将函数执行结果返回给你。**所以前面例子可以返回handleClick来达到储存函数的目的。
+
+所以useCallback常用记忆事件函数，生成记忆后的事件函数并传递给子组件使用。而useMemo更适合经过函数计算得到一个确定的值，比如记忆组件。
+
+**useMemo使用案例-模糊查询**
+
+	const getCinemaList = useMemo(
+		()=>
+		cinemaList.filter(item=>item.name.toUpperCase().includes(inputText.toUpperCase())||item.address.toUpperCase().includes(inputText.toUpperCase())
+	    ),[inputText,cinemaList])
+
+### useRef(保存引用值) ###
+
+	const mySwiper = useRef(null);
+	<Swiper ref = {mySwiper} />
+
+### useReducer和useContext(减少组件层级) ###
+
+
+
 
 
 
