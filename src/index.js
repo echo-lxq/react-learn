@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-18 11:25:54
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-04 21:45:35
+ * @LastEditTime: 2022-09-05 21:42:40
  * @FilePath: \react-learn\src\index.js
  * @Description: 
  * 
@@ -16,7 +16,7 @@ import ReactDOM from "react-dom/client";
 
 // import App from "./01-base/02-函数式组件";
 
-import App from "./03-hooks/12-useContext";
+import App from "./03-hooks/16-自定义hooks"
 
 const container = document.getElementById('root');
 

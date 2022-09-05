@@ -2644,7 +2644,164 @@ useCallback(fn,inputs) is equivalent to useMemo(()=>fn,inputs)
 
 ### useReducer - 先有Redux，hooks将其中一些理念引入到当中来 ###
 
-解决问题：
+解决问题：多个组件复杂的父子通信
+
+![](./src/images/useReducer.jpg)
+
+例子父子组件之间相互通信
+
+	import React from 'react'
+	import axios from 'axios'
+	import './css/03-communication.css'
+	import { useEffect } from 'react'
+	import { useContext } from 'react'
+	import { useReducer } from 'react'
+	
+	const GlobalContext = React.createContext() //创建context对象
+	
+	const reducer = (prevState,action)=>{
+	    let newState = {...prevState}
+	    switch(action.type){
+	        case "setDetail":
+	            newState.detail = action.detail
+	            return newState
+	        case "setList":
+	            newState.filmList = [...action.list]
+	            return newState
+	        default:
+	            return prevState;
+	    }
+	}
+	
+	const initailSatate = {
+	    detail:"",
+	    filmList:[]
+	}
+	
+	
+	export default function App(){
+	
+	    const [detail,setReducer] = useReducer(reducer,initailSatate)
+	
+	    useEffect(()=>{
+	        axios.get('/test.json').then(
+	            res=>{
+	                setReducer({
+	                    type:"setList",
+	                    list:res.data.data.films
+	                })
+	            }
+	        )
+	    },[])
+	
+	    return (
+	        // 生产者
+	        <GlobalContext.Provider value={{
+	                detail,
+	                setReducer
+	            }}>
+	            <div>
+	            {detail.filmList.map(
+	                item=><FilmItem key={item.filmId} {...item}></FilmItem>
+	            )}
+	            <FilmDetail></FilmDetail>
+	            </div>
+	      </GlobalContext.Provider>
+	    )
+	}
+	
+	
+	function FilmItem(props){
+	    let {name,poster,grade,synopsis} = props
+	
+	    const {setReducer} = useContext(GlobalContext)
+	
+	    return(
+	        <div className='filmitem' onClick={()=>{
+	            // this.props.onEvent(synopsis)
+	            setReducer({
+	                type:"setDetail",
+	                detail:synopsis
+	            })
+	        }}>
+	            <img src={poster} alt={name} />
+	            <span className='name'>{props.name}</span>
+	            <div>观众评分：{grade}</div>
+	        </div>
+	    )
+	
+	}
+	
+	function FilmDetail(){
+	    const {detail} = useContext(GlobalContext)
+	    return(
+	        <div className="filmdetail">
+	            {detail.detail}
+	        </div>
+	    )
+	}
+
+### 自定义hooks ###
+
+### 当我们想在两个函数之间共享逻辑时，我们会把它提取到第三个函数中。 ###
+
+必须以"use"开头吗？必须如此，这个约定非常重要。不遵循的话，由于无法判断某个函数是否包含对其内部Hook的调用，React将无法自动检查你的Hook是否违反了Hook的规则
+
+### 将逻辑抽出来单独作为函数-让结构清晰 ###
+
+例子：
+
+	function useCinemaList(){
+	    const [cinemaList,setCinemaList] = useState([])
+	    useEffect(()=>{
+	        axios({
+	            url:"https://m.maizuo.com/gateway?cityId=110100&ticketFlag=1&k=7406159",
+	            method:"get",
+	            headers:{
+	              'X-Client-Info': '{"a":"3000","ch":"1002","v":"5.2.1","e":"1660142019135536282959873","bc":"110100"}',
+	              'X-Host': 'mall.film-ticket.cinema.list'
+	            }
+	          }).then(res=>{
+	            console.log(res.data.data.cinemas)
+	
+	            setCinemaList(res.data.data.cinemas)
+	    
+	            //打印log
+	            console.log(this.state.cinemaList)
+	            // console.log(this.state.bakCinemaList)
+	    
+	          }).catch(err=>{
+	            console.log(err);
+	          })
+	    },[])
+	    return {cinemaList}
+	}
+
+	//解构 使用
+	const {cinemaList} = useCinemaList()
+
+
+# 十二.React路由#
+
+## 1.什么是路由？ ##
+> 路由是根据不同url地址展示不容的内容或页面
+> 
+> 一个针对React而设计的路由解决方案，可以友好的帮你解决React components到URL之间的同步映射关系
+
+## 2.路由安装 ##
+	npm install react-router-dom@5
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
