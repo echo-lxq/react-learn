@@ -16,7 +16,7 @@ import ReactDOM from "react-dom/client";
 
 // import App from "./01-base/02-函数式组件";
 
-import App from "./03-hooks/16-自定义hooks"
+import App from "./04-router/App"
 
 const container = document.getElementById('root');
 

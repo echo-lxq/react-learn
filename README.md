@@ -2791,7 +2791,43 @@ useCallback(fn,inputs) is equivalent to useMemo(()=>fn,inputs)
 ## 2.路由安装 ##
 	npm install react-router-dom@5
 
+### component文件夹下放一些公共的组件，views文件夹下放一个页面下的多个视图组件 ###
 
+## 3.路由使用 ##
+### (1)路由方法导入 ###
+![](./src/images/router_use.jpg)
+
+### (2)定义路由以及重定向 ###
+	<HashRouter>
+          <Switch>
+            <Route path="/films" component={Films}></Route>
+              <Route path="/cinemas" component={Cinemas}></Route>
+              <Route path="/center" component={Center}></Route>
+
+              {/* 模糊匹配 */}
+              {/* <Redirect from="/" to="/films" /> */}
+
+              {/* 精确匹配  exact*/}
+              <Redirect from="/" to="/films" exact/>
+
+              <Route component={NotFound}></Route>
+          </Switch>
+        </HashRouter>
+
+注意： 使用exact精准匹配，外面还要嵌套Switch来用
+
+### (3)嵌套路由 ###
+**嵌套路由父组件路由不要精确匹配！**
+
+父组件中使用以下完成嵌套路由
+
+	<Switch>
+            <Route path="/films/nowplaying" component={NowPlaying}></Route>
+            <Route path="/films/comingsoon" component={ComingSoon}></Route>
+            <Redirect from="/films" to="/films/nowplaying" />
+        </Switch>
+
+### (4)声明式导航与编成式导航 ###
 
 
 
