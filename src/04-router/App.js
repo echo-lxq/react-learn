@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-09-06 10:23:15
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-06 10:27:27
+ * @LastEditTime: 2022-09-07 10:50:00
  * @FilePath: \react-learn\src\04-router\App.js
  * @Description: 
  * 
@@ -11,6 +11,7 @@
 import React, { Component } from 'react'
 
 import Router from './router/indexRouter'
+import Tabbar from './components/Tabbar'
 
 
 export default class App extends Component {
@@ -18,7 +19,10 @@ export default class App extends Component {
     return (
       <div>
         <div>其他内容</div>
-        <Router></Router>
+        <Router>
+          <Tabbar></Tabbar>
+        </Router>
+        
       </div>
     )
   }

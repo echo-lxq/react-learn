@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-09-06 10:39:04
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-06 11:12:53
+ * @LastEditTime: 2022-09-07 10:50:08
  * @FilePath: \react-learn\src\04-router\router\indexRouter.js
  * @Description: 
  * 
@@ -33,6 +33,7 @@ export default class indexRouter extends Component {
 
               <Route component={NotFound}></Route>
           </Switch>
+          {this.props.children}
         </HashRouter>
       </div>
     )

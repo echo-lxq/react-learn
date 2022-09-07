@@ -2827,12 +2827,34 @@ useCallback(fn,inputs) is equivalent to useMemo(()=>fn,inputs)
             <Redirect from="/films" to="/films/nowplaying" />
         </Switch>
 
-### (4)声明式导航与编成式导航 ###
+### (4)路由跳转方式 ###
 
+### 声明式导航与编程式导航 ###
 
+声明式：< a href="#/cinemas">影院< /a>
 
+编程式：location.href = "#/cinemas"
 
+**a.声明式导航**
 
+	<NavLink to="/films" activeClassName='active'>电影</NavLink>
+	<NavLink to="/cinemas" activeClassName='active'>影院</NavLink>
+	<NavLink to="/center" activeClassName='active'>我的</NavLink>
+
+**b.编程式导航**
+
+> es6字符串拼接模板 其中不是单引号 是“ ` ”
+
+	const handleChangePage = (id)=>{
+	    // console.log("click")
+	    
+	    //原生js方法
+	    // window.location.href = "#/detail/"+id
+	    
+	    //当前组件包含在Route中，为Route子组件，可以接受props
+	    props.history.push(`/detail/${id}`)
+
+  	}
 
 
 
