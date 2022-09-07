@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-09-06 11:03:08
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-07 11:36:07
+ * @LastEditTime: 2022-09-07 20:58:43
  * @FilePath: \react-learn\src\04-router\views\films\NowPlaying.js
  * @Description: 
  * 
@@ -41,7 +41,15 @@ export default function NowPlaying(props) {
     // window.location.href = "#/detail/"+id
     
     //当前组件包含在Route中，为Route子组件，可以接受props
-    props.history.push(`/detail/${id}`)
+
+    // 1.动态路由传参
+    // props.history.push(`/detail/${id}`)
+
+    // 2. query传参
+    // props.history.push({pathname:'/detail',query:{id:id}})
+
+    // 3. state传参
+    props.history.push({pathname:'/detail',state:{id:id}})
 
   }
   return (

@@ -2856,8 +2856,41 @@ useCallback(fn,inputs) is equivalent to useMemo(()=>fn,inputs)
 
   	}
 
+### 动态路由 ###
+1.配置跳转及动态路由
 
+	// 1.动态路由传参
+    // props.history.push(`/detail/${id}`)
 
+	// 2.配置 - 动态路由
+	< Route path="/detail/:myid" component={Detail}>< /Route>
+
+2.使用其中参数
+
+	export default function Detail(props) {
+	    console.log(props.match.params.myid,"利用id取后端拿数据")
+	  return (
+	    <div>Detail</div>
+	  )
+	}
+
+### （5）路由传参 ###
+
+query传参与state传参页面刷新之后会丢失传的参数，不适合分享
+
+	// 2. query传参
+    // props.history.push({pathname:'/detail',query:{id:id}})
+	// 3. state传参
+    props.history.push({pathname:'/detail',state:{id:id}})
+
+2.路由配置-普通路由
+
+	<Route path="/detail" component={Detail}></Route>
+
+3.使用参数
+
+	// console.log(props.location.query.id,"利用id取后端拿数据")
+    console.log(props.location.state.id,"利用id取后端拿数据")
 
 
 

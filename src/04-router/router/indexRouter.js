@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-09-06 10:39:04
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-07 10:50:08
+ * @LastEditTime: 2022-09-07 20:46:58
  * @FilePath: \react-learn\src\04-router\router\indexRouter.js
  * @Description: 
  * 
@@ -14,6 +14,7 @@ import Films from '../views/Films'
 import Center from '../views/Center'
 import Cinemas from '../views/Cinemas'
 import NotFound from '../views/NotFound'
+import Detail from '../views/Detail'
 
 export default class indexRouter extends Component {
   render() {
@@ -25,6 +26,8 @@ export default class indexRouter extends Component {
 
               <Route path="/cinemas" component={Cinemas}></Route>
               <Route path="/center" component={Center}></Route>
+              {/* <Route path="/detail/:myid" component={Detail}></Route> */}
+              <Route path="/detail" component={Detail}></Route>
               {/* 模糊匹配 */}
               {/* <Redirect from="/" to="/films" /> */}
 
