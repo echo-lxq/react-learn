@@ -2933,12 +2933,121 @@ query传参与state传参页面刷新之后会丢失传的参数，不适合分�
     //路由地址
     http://localhost:3000/#/center
 
-### （8）withRouter ###
+### （8）withRouter应用及原理 ###
+***关于路由组件使用render方法时候，获取props属性！**
+
+1.可以通过父组件中属性传递给子组件
+
+	<Route path="/center" render={(props)=>{
+      return isAuth()?<Center {...props}></Center>:<Redirect to="/login"/>
+    }}></Route>
+
+2.withRouter - 跨级传输history等值 - 原理=高阶组件
+
+	//1.引入
+	import { withRouter } from 'react-router-dom'
+	
+	//2.包装
+	const WithFilmItem = withRouter(FilmItem)
+
+	//*模块化写法*
+	export default withRouter(Center)
+
+    //3.使用
+	{list.map(item=><WithFilmItem key={item.filmId} {...item}></WithFilmItem>)}
+
+	//对应组件中使用history等属性
+	props.history.push({pathname:'/detail',state:{id:filmId}})
+
+## 4.项目注意 ##
+### (1)反向代理 ###
+
+1.解决跨域的几个方法 - 跨域存在于游览器端
+
+- 后端允许跨域请求-access-control-allow-origin: *
+- jsonP接口
+- 配置反向代理 - 服务器与服务器之间没有跨域限制
+
+cra内置好了反向代理 - create react app
+
+1.安装核心跨域插件 http-proxy-middleware
+2.在项目的src文件夹下新建setupProxy.js文件
+3.配置反向代理代码 - 可配置多个
+	const {createProxyMiddleware} = require('http-proxy-middleware')
+
+	module.exports = function(app){
+	    app.use(
+	        '/ajax', //请求的路径 以api开头的路径需要配置反向代理
+	        createProxyMiddleware({
+	            target: 'https://i.maoyan.com', //上面的请求路径会转发到地址
+	            changeOrigin: true
+	        })
+	    )
+	    app.use(
+	        '/gateway', //请求的路径 以api开头的路径需要配置反向代理
+	        createProxyMiddleware({
+	            target: 'https://m.maizuo.com', //上面的请求路径会转发到地址
+	            changeOrigin: true
+	        })
+	    )
+	}
+4.修改请求部分代码-去掉域名等信息
+
+	useEffect(()=>{
+	    axios.get("/ajax/mostExpected?limit=10&offset=0&token=&optimus_uuid=556A94F02F7911EDADFC891B0223160177BBBE0A5A2C422FB4DA4F00BB4ACC67&optimus_risk_level=71&optimus_code=10").then(
+	      res=>{
+	        console.log(res.data)
+	      }
+	    )
+	  },[])
+
+5.重启服务器！！！
+
+### (2)css module ###
+
+1. 单页面应用css共享，使用import引入之后直接插入到index.html中
+
+1. 新建的css文件更换名为**Film.module.css**,会将内class名加上随机值
+
+1. 引入 import style from './css/Film.module.css'
+
+1. 更换原先类名地方 className = {style.active}
+
+
+若标签选择器 则 不会重命名 ， 尽量使用class选择器 ， 使用标签选择器，可以使用父级关系做 **例如** 
+	
+	.film ul li
+
+初始化或者多个类名的时候，可以使用字符串拼接 **例如**
+
+	className = {style.film} + " aaa"
+
+### 若使用全局选择器###
+
+	：global(.active){
+	
+	}
+
+则对应类名不做变换
+
+
+# 十三、Flux与Redux #
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+	
 
 
 # 学成之后关于vite #

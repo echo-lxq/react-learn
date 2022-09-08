@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-09-06 10:39:04
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-08 16:48:37
+ * @LastEditTime: 2022-09-08 20:49:05
  * @FilePath: \react-learn\src\04-router\router\indexRouter.js
  * @Description: 
  * 
@@ -36,8 +36,8 @@ export default class IndexRouter extends Component {
 
 
               {/* 路由拦截 */}
-              <Route path="/center" render={()=>{
-                return isAuth()?<Center></Center>:<Redirect to="/login"/>
+              <Route path="/center" render={(props)=>{
+                return isAuth()?<Center {...props}></Center>:<Redirect to="/login"/>
               }}></Route>
 
 
@@ -57,3 +57,14 @@ export default class IndexRouter extends Component {
     )
   }
 }
+
+// class Route extends Component{
+//   render(){
+//     var MyComponent = this.props.component
+//     return(
+//       <div>
+//         <MyComponent history={}></MyComponent>
+//       </div>
+//     )
+//   }
+// }
