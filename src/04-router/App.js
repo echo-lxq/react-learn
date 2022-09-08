@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-09-06 10:23:15
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-07 10:50:00
+ * @LastEditTime: 2022-09-08 15:51:07
  * @FilePath: \react-learn\src\04-router\App.js
  * @Description: 
  * 
@@ -10,7 +10,7 @@
  */
 import React, { Component } from 'react'
 
-import Router from './router/indexRouter'
+import Router from './router/IndexRouter'
 import Tabbar from './components/Tabbar'
 
 

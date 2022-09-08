@@ -2870,6 +2870,8 @@ useCallback(fn,inputs) is equivalent to useMemo(()=>fn,inputs)
 	export default function Detail(props) {
 	    console.log(props.match.params.myid,"利用id取后端拿数据")
 	  return (
+
+
 	    <div>Detail</div>
 	  )
 	}
@@ -2892,7 +2894,46 @@ query传参与state传参页面刷新之后会丢失传的参数，不适合分�
 	// console.log(props.location.query.id,"利用id取后端拿数据")
     console.log(props.location.state.id,"利用id取后端拿数据")
 
+### （6）路由拦截 ###
 
+	{/* 路由拦截 */}
+    <Route path="/center" render={()=>{
+      return isAuth()?<Center></Center>:<Redirect to="/login"/>
+    }}></Route>
+
+*注意后面使用重定向跳转，会让url与页面一致
+
+### （7）路由模式 ###
+1.游览器路由BrowserRouter
+
+**使用：**没有#得路径，好看，但是真正朝后端请求要页面，后端没有对应的路径处理路径会404，不好看。
+	
+	//引入
+	import {BrowserRouter,Route,Redirect,Switch} from 'react-router-dom'
+	
+	//使用
+	<BrowserRouter>
+      <Switch>
+        <Route path="/films" component={Films}></Route>
+      </Switch>
+    </BrowserRouter>
+	
+	//路由地址
+    http://localhost:3000/films/nowplaying
+
+2.HashRouter - 不会朝后端发请求
+	import {HashRouter as Router,Route,Redirect,Switch} from 'react-router-dom'
+	//使用
+	<Router>
+         <Switch>
+            <Route path="/films" component={Films}></Route>
+		</Switch>    
+    </Router>
+    
+    //路由地址
+    http://localhost:3000/#/center
+
+### （8）withRouter ###
 
 
 
