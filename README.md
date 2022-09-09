@@ -3032,15 +3032,25 @@ cra内置好了反向代理 - create react app
 
 
 # 十三、Flux与Redux #
+Flux是一种架构思想，专门解决软件的结构问题。它跟MVC架构是同一类东西，但是更加简单和清晰。Flux存在多种实现(至少15种)
 
+FaceBook Flux是用来构建客户端Web应用架构，它利用单向数据流的方式来组合React中的视图组件。它更像是一个模式而不是一个正式的框架，开发者不需要太多的新代码就可以快速上手Flux；
 
+![](./src/images/flux.jpg)
 
+Redux最主要是用作应用状态的管理。简言之，Redux用一个单独的常量状态树(state对象)保存这一整个应用的状态，这个对象不能直接被改变。当一些数据变化了，一个新的对象就会被创建(使用actions和reducers)，这样就可以进行数据追踪，实现时光旅行。
 
+## 1.redux介绍及设计和使用的三大原则 ##
 
+- state 以单一对象存储在store对象中
+- state 只读(每次都返回一个新的对象)
+- 使用纯函数reducer执行state更新
 
+## 2.redux工作流 ##
 
+![](./src/images/redux-flow.png)
 
-
+## 3.与react绑定后使用redux实现案例 ##
 
 
 
