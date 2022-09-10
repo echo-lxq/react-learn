@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-09-05 21:10:28
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-05 21:32:02
+ * @LastEditTime: 2022-09-09 15:13:04
  * @FilePath: \react-learn\src\03-hooks\15-useReducer3.js
  * @Description: 
  * 
@@ -44,6 +44,7 @@ export default function App(){
     useEffect(()=>{
         axios.get('/test.json').then(
             res=>{
+                
                 setReducer({
                     type:"setList",
                     list:res.data.data.films

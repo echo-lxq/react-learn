@@ -3051,6 +3051,82 @@ Redux最主要是用作应用状态的管理。简言之，Redux用一个单独�
 ![](./src/images/redux-flow.png)
 
 ## 3.与react绑定后使用redux实现案例 ##
+项目目录下新建 redux文件夹，新建actionCreator文件夹与store.js
+
+**store.js：**
+
+	// 1.引入redux
+	import { createStore } from 'redux'
+	
+	// 2.createStore(reducer) 
+	const reducer = (prevState={
+	    show:true
+	},action)=>{
+	    let newState = {...prevState}
+	    switch(action.type){
+	        case "hide-tabbar":
+	            newState.show = false
+	            return newState
+	        case "show-tabbar":
+	            newState.show = true
+	            return newState
+	        default:
+	            return prevState
+	    }
+	    
+	}
+	const store = createStore(reducer);
+	
+	// 3.导出
+	export default store
+
+**actionCreator文件新建文件TabbarActionCreator.js-存放需要传递的action**
+
+	function show(){
+	    return {
+	        type:"show-tabbar"
+	    }
+	}
+	
+	function hide(){
+	    return{
+	        type:'hide-tabbar'
+	    }
+	}
+	
+	export {show,hide}
+
+**使用(发布订阅)**
+
+> 发布
+
+	useEffect(()=>{
+      // console.log("创建")
+
+      //store.dispatch 通知
+      store.dispatch(hide())
+
+      return(()=>{
+        store.dispatch(show())
+      })
+    },[])
+
+> 订阅
+
+	componentDidMount(){
+	    store.subscribe(()=>{
+	      // console.log("app 中订阅",store.getState())
+	      this.setState({
+	        showTabbar:store.getState().show
+	      })
+	    })
+	}
+
+## 4.redux原理解析 ##
+
+
+
+
 
 
 
