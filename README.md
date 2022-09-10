@@ -3124,9 +3124,38 @@ Redux最主要是用作应用状态的管理。简言之，Redux用一个单独�
 
 ## 4.redux原理解析 ##
 
+> 新建函数替代redux的createStore()
 
+	function createWeiShanStore(reducer){
+	    var list = []
+	    var state = reducer(undefined,{})
+	    function subscribe(callback){
+	        list.push(callback)
+	    }
+	    function dispatch(action){
+	        state = reducer(state,action)
+	        for(var i in list){
+	            list[i]&&list[i]()
+	        }
+	    }
+	    function getState(){
+	        return state
+	    }
+	    return{
+	        subscribe,
+	        dispatch,
+	        getState
+	    }
+	}
 
+### 纯函数 ###
 
+reducer是纯函数，传入老状态不改变，返回新状态
+
+- 对外界变量等不产生影响（例如传入一个对象，直接操作对象会影响原对象）
+- 同样的输入得到同样的输出（一一对应）
+
+## 5.reducer扩展 ##
 
 
 

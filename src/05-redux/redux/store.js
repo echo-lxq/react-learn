@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-09-10 11:10:43
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-10 11:38:11
+ * @LastEditTime: 2022-09-10 19:54:15
  * @FilePath: \react-learn\src\05-redux\redux\store.js
  * @Description: 
  * 
@@ -29,7 +29,36 @@ const reducer = (prevState={
     }
     
 }
-const store = createStore(reducer);
+const store = createWeiShanStore(reducer);
 
 // 3.导出
 export default store
+
+/**
+ * store.dispatch
+ * store.subscribe
+ * store.getState
+ */
+
+function createWeiShanStore(reducer){
+    var list = []
+    var state = reducer(undefined,{})
+    function subscribe(callback){
+        list.push(callback)
+    }
+    function dispatch(action){
+        state = reducer(state,action)
+        for(var i in list){
+            list[i]&&list[i]()
+        }
+    }
+    function getState(){
+        return state
+    }
+    return{
+        subscribe,
+        dispatch,
+        getState
+    }
+
+}
