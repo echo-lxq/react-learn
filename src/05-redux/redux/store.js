@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-09-10 11:10:43
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-11 11:19:17
+ * @LastEditTime: 2022-09-11 21:47:51
  * @FilePath: \react-learn\src\05-redux\redux\store.js
  * @Description: 
  * 
@@ -16,6 +16,7 @@ import { applyMiddleware, createStore } from 'redux'
 
 import { combineReducers } from "redux";
 import reduxThunk from 'redux-thunk'
+import reduxPromise from 'redux-promise'
 import CityReducer from "./reducers/CityReducer";
 import TabbarReducer from "./reducers/TabbarReducer";
 import CinemaListReducer from "./reducers/CinemaListReducer";
@@ -26,7 +27,7 @@ const reducer = combineReducers({
     CinemaListReducer
 })
 
-const store = createStore(reducer,applyMiddleware(reduxThunk));
+const store = createStore(reducer,applyMiddleware(reduxThunk,reduxPromise));
 
 // 3.导出
 export default store

@@ -1,25 +1,25 @@
 /*
  * @Author: WeiShan
- * @Date: 2022-09-06 10:32:27
+ * @Date: 2022-09-11 21:25:21
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-11 21:24:03
- * @FilePath: \react-learn\src\05-redux\views\Cinemas.js
+ * @LastEditTime: 2022-09-11 21:41:10
+ * @FilePath: \react-learn\src\05-redux\views\Search.js
  * @Description: 
  * 
  * Copyright (c) 2022 by WeiShan/xls, All Rights Reserved. 
  */
 import React from 'react'
 import { useEffect } from 'react'
-import { useState } from 'react'
 import store from '../redux/store'
+import { useState } from 'react'
 import getCinemaListAction from '../redux/actionCreator/getCinemaListAction'
+import { useMemo } from 'react'
 
-export default function Cinemas(props) {
-
-  const [cityName] = useState(store.getState().CityReducer.cityName)
+export default function Search() {
 
   const [cinemaList,setCinemaList] = useState(store.getState().CinemaListReducer.cinemaList)
 
+  const [mytext,setMytext] = useState("")
   useEffect(()=>{
     if(store.getState().CinemaListReducer.cinemaList.length === 0){
       // console.log("去后台取数据")
@@ -44,25 +44,23 @@ export default function Cinemas(props) {
 
   },[])
 
+  const getCinemaList = useMemo(()=>cinemaList.filter(item=>item.name.toUpperCase().includes(mytext.toUpperCase())),
+  [cinemaList,mytext])
+
   return (
     <div>
-      <div style={{overflow:"hidden"}}>
-        <div style={{float:"left"}} onClick={()=>{
-          props.history.push(`/city`)
-        }}>{cityName}</div>
-        <div style={{float:"right"}} onClick={()=>{
-          props.history.push(`/cinemas/search`)
-        }}>
-          搜索
+        <div>
+            <input type="text" value={mytext} onChange={(evt)=>{
+                setMytext(evt.target.value)
+                // getCinemaList()
+                // getCinemaList()
+            }}/>
         </div>
-      </div>
-      
-      <div>
-        <ul>
-        {cinemaList.map(item=><li key={item.cinemaId}>{item.name}</li>)}    
-        </ul>
-      </div>
+        <div>
+            <ul>
+                {getCinemaList.map(item=><li key={item.cinemaId}>{item.name}</li>)}    
+            </ul>
+        </div>
     </div>
   )
 }
-

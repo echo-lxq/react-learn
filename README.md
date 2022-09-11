@@ -3223,8 +3223,76 @@ return一个函数，并且传入一个参数，在指定地方调用传入参�
 	
 	}
 
-export default getCinemaListAction
+	export default getCinemaListAction
 
+### 防止重复订阅！！ ###
+
+	// 会导致订阅多次,订阅完成之后会返回一个函数，这个函数就可以取消订阅
+    var unsubscribe =store.subscribe(()=>{
+      console.log("cinema中订阅",store.getState().CinemaListReducer.cinemaList)
+      setCinemaList(store.getState().CinemaListReducer.cinemaList)
+    })
+
+    //禁止重复订阅
+    return(()=>{
+      //取消订阅
+      unsubscribe()
+    })
+
+**b. redux-promise**
+
+1.安装redux-thunk
+
+	npm i redux-promise
+
+2.store.js中使用
+
+	import reduxPromise from 'redux-promise'
+	const store = createStore(reducer,applyMiddleware(reduxThunk,reduxPromise));
+
+3.构造action时候使用-actionCreator
+
+> es6写法 return(promise对象(.then))
+
+	return axios({
+          url:"https://m.maizuo.com/gateway?cityId=110100&ticketFlag=1&k=7406159",
+          method:"get",
+          headers:{
+            'X-Client-Info': '{"a":"3000","ch":"1002","v":"5.2.1","e":"1660142019135536282959873","bc":"110100"}',
+            'X-Host': 'mall.film-ticket.cinema.list'
+          }
+        }).then(res=>{
+          // console.log(res.data.data.cinemas)
+          return({
+              type:"change-list",
+              payload:res.data.data.cinemas
+          })
+        }).catch(err=>{
+          console.log(err);
+        })
+
+> es7写法 async和await
+
+	async function getCinemaListAction(){
+	    var list = await axios({
+	        url:"https://m.maizuo.com/gateway?cityId=110100&ticketFlag=1&k=7406159",
+	        method:"get",
+	        headers:{
+	          'X-Client-Info': '{"a":"3000","ch":"1002","v":"5.2.1","e":"1660142019135536282959873","bc":"110100"}',
+	          'X-Host': 'mall.film-ticket.cinema.list'
+	        }
+	      }).then(res=>{
+	        // console.log(res.data.data.cinemas)
+	        return({
+	            type:"change-list",
+	            payload:res.data.data.cinemas
+	        })
+	      }).catch(err=>{
+	        console.log(err);
+	      })
+	    return list
+	// }
+	}
 
 
 

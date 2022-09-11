@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-09-06 10:23:15
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-10 11:36:24
+ * @LastEditTime: 2022-09-11 21:31:37
  * @FilePath: \react-learn\src\05-redux\App.js
  * @Description: 
  * 
@@ -35,7 +35,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <div>其他内容</div>
+        {/* <div>其他内容</div> */}
         <Router>
           {this.state.showTabbar&&<Tabbar></Tabbar>}
         </Router>

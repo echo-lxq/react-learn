@@ -17,6 +17,7 @@ import NotFound from '../views/NotFound'
 import Detail from '../views/Detail'
 import Login from '../views/Login'
 import City from '../views/City'
+import Search from '../views/Search'
 
 function isAuth(){
   return localStorage.getItem("token")
@@ -31,7 +32,9 @@ export default class IndexRouter extends Component {
           <Switch>
             <Route path="/films" component={Films}></Route>
 
-              <Route path="/cinemas" component={Cinemas}></Route>
+              <Route path="/cinemas" component={Cinemas} exact></Route>
+
+              <Route path="/cinemas/search" component={Search}></Route>
 
               <Route path="/login" component={Login}></Route>
 
