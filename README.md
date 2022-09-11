@@ -3157,6 +3157,83 @@ reducer是纯函数，传入老状态不改变，返回新状态
 
 ## 5.reducer扩展 ##
 
+### redux管理的数据放在(游览器的内存中，刷新一下游览器就丢失了) ###
+
+如果不同的action所处理的属性之间没有联系，我们可以把Reducer函数拆分。不同的函数负责处理不同属性，最终他们合并成一个大的Reducer即可。
+
+redux 文件夹下新建reducers文件夹，拆分原有合并的reducer
+
+![](./src/images/reducer-combine.jpg)
+
+在store.js中合并reducer
+		
+	//导入并合并
+	import CityReducer from "./reducers/CityReducer";
+	import TabbarReducer from "./reducers/TabbarReducer";
+	
+	const reducer = combineReducers({
+	    CityReducer,
+	    TabbarReducer
+	})
+
+## 6.redux中间件 ##
+
+在redux里，action仅仅是携带了数据的普通js对象。action creator返回的值是这个action类型的对象。然后通过store.dispatch()进行分发。同步的情况下很完美，但是reducer无法处理异步的情况。
+
+那么我们就需要在action和reducer中间架起一座桥梁来处理异步。这个就是middleware。
+
+### 常用异步中间件 ###
+**a. redux-thunk（store.dispatch参数可以是一个function）**
+
+1.安装redux-thunk
+
+	npm i redux-thunk
+
+2.store.js中使用
+
+	import reduxThunk from 'redux-thunk'
+	const store = createStore(reducer,applyMiddleware(reduxThunk));
+
+3.构造action时候使用-actionCreator
+
+return一个函数，并且传入一个参数，在指定地方调用传入参数函数，即可异步返回指定值
+
+	import axios from "axios"
+	
+	function getCinemaListAction(){
+	
+	    return (dispatch)=>{
+	        axios({
+	            url:"https://m.maizuo.com/gateway?cityId=110100&ticketFlag=1&k=7406159",
+	            method:"get",
+	            headers:{
+	              'X-Client-Info': '{"a":"3000","ch":"1002","v":"5.2.1","e":"1660142019135536282959873","bc":"110100"}',
+	              'X-Host': 'mall.film-ticket.cinema.list'
+	            }
+	          }).then(res=>{
+	            // console.log(res.data.data.cinemas)
+	            dispatch({
+	                type:"change-list",
+	                payload:res.data.data.cinemas
+	            })
+	          }).catch(err=>{
+	            console.log(err);
+	          })
+	    }
+	
+	}
+
+export default getCinemaListAction
+
+
+
+
+
+
+
+
+
+
 
 
 

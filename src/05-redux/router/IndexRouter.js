@@ -2,8 +2,8 @@
  * @Author: WeiShan
  * @Date: 2022-09-06 10:39:04
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-08 20:49:05
- * @FilePath: \react-learn\src\04-router\router\indexRouter.js
+ * @LastEditTime: 2022-09-11 10:15:52
+ * @FilePath: \react-learn\src\05-redux\router\IndexRouter.js
  * @Description: 
  * 
  * Copyright (c) 2022 by WeiShan/xls, All Rights Reserved. 
@@ -16,6 +16,7 @@ import Cinemas from '../views/Cinemas'
 import NotFound from '../views/NotFound'
 import Detail from '../views/Detail'
 import Login from '../views/Login'
+import City from '../views/City'
 
 function isAuth(){
   return localStorage.getItem("token")
@@ -34,6 +35,7 @@ export default class IndexRouter extends Component {
 
               <Route path="/login" component={Login}></Route>
 
+              <Route path="/city" component={City}></Route>
 
               {/* 路由拦截 */}
               <Route path="/center" render={(props)=>{

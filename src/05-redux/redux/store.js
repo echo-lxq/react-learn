@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-09-10 11:10:43
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-10 19:54:15
+ * @LastEditTime: 2022-09-11 11:19:17
  * @FilePath: \react-learn\src\05-redux\redux\store.js
  * @Description: 
  * 
@@ -10,26 +10,23 @@
  */
 
 // 1.引入redux
-import { createStore } from 'redux'
+import { applyMiddleware, createStore } from 'redux'
 
 // 2.createStore(reducer) 
-const reducer = (prevState={
-    show:true
-},action)=>{
-    let newState = {...prevState}
-    switch(action.type){
-        case "hide-tabbar":
-            newState.show = false
-            return newState
-        case "show-tabbar":
-            newState.show = true
-            return newState
-        default:
-            return prevState
-    }
-    
-}
-const store = createWeiShanStore(reducer);
+
+import { combineReducers } from "redux";
+import reduxThunk from 'redux-thunk'
+import CityReducer from "./reducers/CityReducer";
+import TabbarReducer from "./reducers/TabbarReducer";
+import CinemaListReducer from "./reducers/CinemaListReducer";
+
+const reducer = combineReducers({
+    CityReducer,
+    TabbarReducer,
+    CinemaListReducer
+})
+
+const store = createStore(reducer,applyMiddleware(reduxThunk));
 
 // 3.导出
 export default store
@@ -40,25 +37,25 @@ export default store
  * store.getState
  */
 
-function createWeiShanStore(reducer){
-    var list = []
-    var state = reducer(undefined,{})
-    function subscribe(callback){
-        list.push(callback)
-    }
-    function dispatch(action){
-        state = reducer(state,action)
-        for(var i in list){
-            list[i]&&list[i]()
-        }
-    }
-    function getState(){
-        return state
-    }
-    return{
-        subscribe,
-        dispatch,
-        getState
-    }
+// function createWeiShanStore(reducer){
+//     var list = []
+//     var state = reducer(undefined,{})
+//     function subscribe(callback){
+//         list.push(callback)
+//     }
+//     function dispatch(action){
+//         state = reducer(state,action)
+//         for(var i in list){
+//             list[i]&&list[i]()
+//         }
+//     }
+//     function getState(){
+//         return state
+//     }
+//     return{
+//         subscribe,
+//         dispatch,
+//         getState
+//     }
 
-}
+// }
