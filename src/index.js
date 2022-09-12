@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-18 11:25:54
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-05 21:42:40
+ * @LastEditTime: 2022-09-12 10:59:09
  * @FilePath: \react-learn\src\index.js
  * @Description: 
  * 
@@ -16,7 +16,7 @@ import ReactDOM from "react-dom/client";
 
 // import App from "./01-base/02-函数式组件";
 
-import App from "./05-redux/App"
+import App from "./06-react-redux/App"
 
 const container = document.getElementById('root');
 

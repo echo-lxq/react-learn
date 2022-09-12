@@ -3294,6 +3294,47 @@ return一个函数，并且传入一个参数，在指定地方调用传入参�
 	// }
 	}
 
+## 7.redux调试工具 ##
+
+> 插件下载地址
+
+[https://github.com/zalmoxisus/redux-devtools-extension/releases](https://github.com/zalmoxisus/redux-devtools-extension/releases)
+
+> 相关文档
+
+[https://github.com/zalmoxisus/redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)
+
+安装：下载对应程序扩展到扩展程序安装即可
+
+> 修改createStore部分代码如下
+
+	增 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+	
+	修 const store = createStore(reducer, /* preloadedState, */ composeEnhancers(
+	    applyMiddleware(reduxThunk,reduxPromise)
+	    ));
+
+![](./src/images/redux-devtool.jpg)
+
+# 十四.react-redux #
+## 1.介绍 ##
+![](./src/images/react-redux.jpg)
+
+## 2.react-redux使用 ##
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
