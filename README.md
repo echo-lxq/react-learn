@@ -3322,6 +3322,203 @@ return一个函数，并且传入一个参数，在指定地方调用传入参�
 
 ## 2.react-redux使用 ##
 
+> 1.修改index.js文件内容，外层套上react-redux Provider
+
+	//引入
+	import { Provider } from "react-redux";
+	import store from "./06-react-redux/redux/store";
+	//使用
+	root.render(
+	    <Provider store={store}>
+	        <App/>
+	    </Provider>
+	);
+
+> 2.订阅位置使用connect包装
+
+	//引入
+	import {connect} from 'react-redux'
+
+	//包装
+	export default  connect((state)=>{
+	  console.log(state)
+	  return{
+	    isShow:state.TabbarReducer.show
+	  }
+	})(App)
+
+	//使用
+	return (
+      <div>
+        {/* <div>其他内容</div> */}
+        <Router>
+          {this.props.isShow&&<Tabbar></Tabbar>}
+        </Router>
+      </div>
+    )
+
+### connect 第一个参数，给孩子传的属性，第二个参数为给孩子传的回调函数 ###
+
+3.修改dispatch部分
+
+	//引入
+	import { show,hide } from '../redux/actionCreator/TabbarActionCreator'
+	import {connect} from 'react-redux'
+
+	//包装
+	//connect 第一个参数，给孩子传的属性，第二个参数为给孩子传的回调函数
+	export default connect(null,{
+	  show,
+	  hide
+	})(Detail)
+
+	//使用
+	function Detail(props) {
+	    // console.log(props.match.params.myid,"利用id取后端拿数据")
+	    // console.log(props.location.query.id,"利用id取后端拿数据"
+	    let {show,hide,location} = props
+	    useEffect(()=>{
+	      console.log(location.state.id,"利用id取后端拿数据")
+	      
+	      //store.dispatch 通知
+	      // store.dispatch(hide())
+	      hide()
+	
+	      return(()=>{
+	      //   store.dispatch(show())
+	        show()
+	      })
+	    },[location.state.id,show,hide])
+	
+	  return (
+	    <div>Detail</div>
+	  )
+	}
+
+### 可优化部分 ###
+
+	//订阅
+	const mapStateToProps = (state)=>{
+	  console.log(state)
+	  return{
+	    isShow:state.TabbarReducer.show
+	  }
+	}
+	export default  connect(mapStateToProps)(App)
+	
+	//发布
+	const mapDispatchToProps = {
+	  show,
+	  hide
+	}
+	export default connect(null,mapDispatchToProps)(Detail)
+
+## 3.react-redux原理 ##
+
+### HOC与context通信再react-redux底层中的应用 ###
+1. connect是HOC，高阶组件
+1. Provider组件，可以让容器组件拿到state，使用了context
+
+### 高阶组件构建与应用 ###
+HOC不仅仅是一个方法，确切说应该是一个组件工厂，获取低阶组件，生成高阶组件。
+
+1. 代码复用，代码模块化
+1. 增删改props
+1. 渲染劫持
+
+	import React from 'react'
+	import { useEffect } from 'react'
+	
+	function NotFound(props) {
+	
+	  useEffect(()=>{
+	    console.log(props)
+	  },[props])
+	
+	  return (
+	    <div>404 NotFound</div>
+	  )
+	}
+	
+	function WeiShanconnect(cb,obj){
+	  var value= cb()
+	  return(MyComponent)=>{
+	    return(props)=>{
+	      console.log(props)
+	      return <div style={{color:"red"}}>
+	        <MyComponent {...value} {...props} {...obj}></MyComponent>
+	      </div>
+	    }
+	  }
+	}
+	
+	export default WeiShanconnect(()=>{
+	  return{
+	    a:1,
+	    b:2
+	  }
+	},{aa(){console.log("aa")}})(NotFound)
+
+## 4.redux持久化 ##
+
+> 安装插件 redux-persist ！配合react-redux使用
+
+	npm i redux-persist
+
+> 使用：改造store.js
+
+	import { createStore, applyMiddleware, compose } from 'redux';
+	
+	// 2.createStore(reducer) 
+	
+	import { combineReducers } from "redux";
+	import reduxThunk from 'redux-thunk'
+	import reduxPromise from 'redux-promise'
+	import CityReducer from "./reducers/CityReducer";
+	import TabbarReducer from "./reducers/TabbarReducer";
+	import CinemaListReducer from "./reducers/CinemaListReducer";
+	
+	import { persistStore, persistReducer } from 'redux-persist'
+	import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+	
+	const persistConfig = {
+	    key: 'root',
+	    storage,
+	    whitelist:['CityReducer']
+	  }
+	
+	const reducer = combineReducers({
+	    CityReducer,
+	    TabbarReducer,
+	    CinemaListReducer
+	})
+	
+	const persistedReducer = persistReducer(persistConfig, reducer)
+	
+	const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+	
+	const store = createStore(persistedReducer, /* preloadedState, */ composeEnhancers(
+	    applyMiddleware(reduxThunk,reduxPromise)
+	    ));
+	
+	    let persistor = persistStore(store)
+	
+	// 3.导出
+	export {store,persistor}
+
+> 改造index.js
+
+	//引入
+	import {store,persistor} from "./06-react-redux/redux/store";
+	import { PersistGate } from 'redux-persist/integration/react'
+
+	//使用
+	<PersistGate loading={null} persistor={persistor}>
+        <App/>
+    </PersistGate>
+
+# 十四、UI组件库 #
+
 
 
 
@@ -3349,6 +3546,11 @@ return一个函数，并且传入一个参数，在指定地方调用传入参�
 
 
 	
+
+
+
+
+
 
 
 # 学成之后关于vite #

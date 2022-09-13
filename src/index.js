@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-18 11:25:54
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-12 10:59:09
+ * @LastEditTime: 2022-09-13 21:57:54
  * @FilePath: \react-learn\src\index.js
  * @Description: 
  * 
@@ -18,20 +18,20 @@ import ReactDOM from "react-dom/client";
 
 import App from "./06-react-redux/App"
 
+import { Provider } from "react-redux";
+
+import {store,persistor} from "./06-react-redux/redux/store";
+
+import { PersistGate } from 'redux-persist/integration/react'
+
 const container = document.getElementById('root');
 
 const root = ReactDOM.createRoot(container);
 
 root.render(
-    // React.createElement("div",{
-    //     id:"aaa",
-    //     className:"bbb"
-    // },"123")
-    // 使用严格模式校验 React.StrictMode 
-    // <React.StrictMode>
-    
+    <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
         <App/>
-    
-    // </React.StrictMode>
-    
+        </PersistGate>
+    </Provider>
 );

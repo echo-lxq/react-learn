@@ -2,15 +2,15 @@
  * @Author: WeiShan
  * @Date: 2022-09-11 21:25:21
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-11 21:41:10
- * @FilePath: \react-learn\src\05-redux\views\Search.js
+ * @LastEditTime: 2022-09-13 21:55:29
+ * @FilePath: \react-learn\src\06-react-redux\views\Search.js
  * @Description: 
  * 
  * Copyright (c) 2022 by WeiShan/xls, All Rights Reserved. 
  */
 import React from 'react'
 import { useEffect } from 'react'
-import store from '../redux/store'
+import {store} from '../redux/store'
 import { useState } from 'react'
 import getCinemaListAction from '../redux/actionCreator/getCinemaListAction'
 import { useMemo } from 'react'
