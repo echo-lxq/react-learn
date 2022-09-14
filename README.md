@@ -3518,15 +3518,33 @@ HOC不仅仅是一个方法，确切说应该是一个组件工厂，获取低�
     </PersistGate>
 
 # 十四、UI组件库 #
+Ant Design是一个致力于提升[用户]和[设计者]是哦那个体验的设计语言：为了统一中台项目的前端UI设计，屏蔽不必要的设计差异和实现成本，解放设计和前端研发资源；包含很多设计原则和配套的组件库。
 
+## 1.ant-design(PC端) ##
 
+[https://ant.design/index.cn](https://ant.design/index.cn)
 
+[https://ant-design.gitee.io/index.cn](https://ant-design.gitee.io/index.cn)（镜像库，快）
 
+## 2.antd-mobie（移动端） ##
 
+[https://mobile-ant-design](https://mobile-ant-design)
 
+## 3.基本使用 ##
 
+> 在index.js中引入样式，这样可以全局使用
 
+	import 'antd/dist/antd.min.css';
 
+> 引入组件并根据文档设置对应参数
+
+	import { Button } from 'antd';
+	
+	<Button type="primary" danger loading={true} onClick={()=>{
+            console.log("click")
+        }}>Primary Button</Button>
+
+![](./src/images/antd-button.jpg)
 
 
 
