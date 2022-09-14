@@ -3528,9 +3528,17 @@ Ant Design是一个致力于提升[用户]和[设计者]是哦那个体验的设
 
 ## 2.antd-mobie（移动端） ##
 
-[https://mobile-ant-design](https://mobile-ant-design)
+[https://mobile.ant.design/zh](https://mobile.ant.design/zh)
+
+> 国内镜像
+
+[http://ant-design-mobile.antgroup.com/zh](http://ant-design-mobile.antgroup.com/zh)
 
 ## 3.基本使用（PC端） ##
+
+> 安装
+
+	npm i antd
 
 > 在index.js中引入样式，这样可以全局使用
 
@@ -3549,7 +3557,21 @@ Ant Design是一个致力于提升[用户]和[设计者]是哦那个体验的设
 
 ## 3.基本使用（移动端） ##
 
+> 安装
 
+	npm i --save antd-mobile@next
+
+> 使用
+
+	//引入(不用单独引入css!区别pc端)
+	import {Button} from 'antd-mobile'
+	
+	//使用
+	<Button color='danger' fill='solid'>
+	   Solid
+	</Button>
+
+# !!!!! 格式化快捷键 alt + shift + f  !!!!!!#
 
 
 
