@@ -3530,7 +3530,7 @@ Ant Design是一个致力于提升[用户]和[设计者]是哦那个体验的设
 
 [https://mobile-ant-design](https://mobile-ant-design)
 
-## 3.基本使用 ##
+## 3.基本使用（PC端） ##
 
 > 在index.js中引入样式，这样可以全局使用
 
@@ -3546,6 +3546,8 @@ Ant Design是一个致力于提升[用户]和[设计者]是哦那个体验的设
 
 ![](./src/images/antd-button.jpg)
 
+
+## 3.基本使用（移动端） ##
 
 
 

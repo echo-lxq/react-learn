@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-18 11:25:54
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-14 11:09:47
+ * @LastEditTime: 2022-09-14 16:42:32
  * @FilePath: \react-learn\src\index.js
  * @Description: 
  * 
@@ -18,7 +18,7 @@ import 'antd/dist/antd.min.css';
 
 // import App from "./01-base/02-函数式组件";
 
-import App from "./07-antd/01-antd引入"
+import App from "./07-antd/09-Modal"
 
 // import { Provider } from "react-redux";
 
