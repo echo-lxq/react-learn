@@ -2,8 +2,8 @@
  * @Author: WeiShan
  * @Date: 2022-09-11 21:25:21
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-13 21:55:29
- * @FilePath: \react-learn\src\06-react-redux\views\Search.js
+ * @LastEditTime: 2022-09-17 12:07:12
+ * @FilePath: \react-learn\src\08-antd-mobile\views\Search.js
  * @Description: 
  * 
  * Copyright (c) 2022 by WeiShan/xls, All Rights Reserved. 
@@ -14,7 +14,8 @@ import {store} from '../redux/store'
 import { useState } from 'react'
 import getCinemaListAction from '../redux/actionCreator/getCinemaListAction'
 import { useMemo } from 'react'
-
+import { SearchBar } from 'antd-mobile'
+ 
 export default function Search() {
 
   const [cinemaList,setCinemaList] = useState(store.getState().CinemaListReducer.cinemaList)
@@ -49,12 +50,17 @@ export default function Search() {
 
   return (
     <div>
-        <div>
-            <input type="text" value={mytext} onChange={(evt)=>{
+        <div style={{padding:"10px"}}>
+            {/* <input type="text" value={mytext} onChange={(evt)=>{
                 setMytext(evt.target.value)
                 // getCinemaList()
                 // getCinemaList()
-            }}/>
+            }}/> */}
+        <SearchBar value={mytext} onChange={(value)=>{
+                setMytext(value)
+                // getCinemaList()
+                // getCinemaList()
+            }} placeholder='请输入内容' showCancelButton={() => true} />
         </div>
         <div>
             <ul>

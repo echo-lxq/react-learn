@@ -2,8 +2,8 @@
  * @Author: WeiShan
  * @Date: 2022-09-06 10:32:27
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-13 21:05:07
- * @FilePath: \react-learn\src\06-react-redux\views\Cinemas.js
+ * @LastEditTime: 2022-09-17 12:01:13
+ * @FilePath: \react-learn\src\08-antd-mobile\views\Cinemas.js
  * @Description: 
  * 
  * Copyright (c) 2022 by WeiShan/xls, All Rights Reserved. 
@@ -14,6 +14,8 @@ import { useEffect } from 'react'
 // import store from '../redux/store'
 import getCinemaListAction from '../redux/actionCreator/getCinemaListAction'
 import  {connect} from 'react-redux'
+import {NavBar} from 'antd-mobile'
+import { SearchOutline } from 'antd-mobile-icons'
 
 function Cinemas(props) {
 
@@ -33,7 +35,7 @@ function Cinemas(props) {
 
   return (
     <div>
-      <div style={{overflow:"hidden"}}>
+      {/* <div style={{overflow:"hidden"}}>
         <div style={{float:"left"}} onClick={()=>{
           props.history.push(`/city`)
         }}>{props.cityName}</div>
@@ -42,7 +44,15 @@ function Cinemas(props) {
         }}>
           搜索
         </div>
-      </div>
+      </div> */}
+
+        <NavBar back={null} right={ <SearchOutline onClick={()=>{
+          props.history.push(`/cinemas/search`)
+        }}/>} left={<div onClick={()=>{
+          props.history.push(`/city`)
+        }}>{props.cityName}</div>}>
+          影院
+        </NavBar>
       
       <div>
         <ul>
