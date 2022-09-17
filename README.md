@@ -3573,12 +3573,57 @@ Ant Design是一个致力于提升[用户]和[设计者]是哦那个体验的设
 
 # !!!!! 格式化快捷键 alt + shift + f  !!!!!!#
 
+# 十五.Immutable #
 
+## 1.Immutable.js介绍 ##
+[https://github.com/immutable-js/immutable.js](https://github.com/immutable-js/immutable.js)
 
+每一次修改一个Immutable对象时都会创建一个新的不可变的对象，在新对象上操作并不会影响到原对象的数据。
 
+这个库实现的是深拷贝还是浅拷贝？
 
+## 2.深拷贝与浅拷贝的关系 ##
 
+(1)var arr = {}; arr2 = arr;
+	
+(2)Object.assign()只是一级属性复制，比浅拷贝多拷贝了一层
+	
+(3)const obj1 = JSON.parse(JSON.stringify(obj));数组，对象都好用的方法(缺点：不能有undefined)
+	
+	//引用复制,浅复制
+	var obj = {
+	    name:"WweiShan"
+	}
+	var obj2 = obj
+	obj2.name = "WeiShanCopy"
+	console.log(obj,obj2)
+	
+	//比深复制多复制了一层，不是严格意义的深复制
+	var myobj = {
+	    name:"WeiShan",
+	    arr:[1,2,3]
+	}
+	var myobj2 = {...myobj} //slice等方法
+	myobj2.name = "WeiShanCoppy"
+	myobj2.arr.splice(1,1)
+	console.log(myobj,myobj2)
+	
+	//json-parse json-stringify -深复制- 致命缺点，对象中不能有undefine(会删掉)
+	var jsonobj = {
+	    name:"WeiShan",
+	    arr:[1,2,3]
+	}
+	var jsonobj2 = JSON.parse(JSON.stringify(jsonobj))
+	jsonobj2.name = "WeiShanCoppy"
+	jsonobj2.arr.splice(1,1)
+	console.log(jsonobj,jsonobj2)
+	
+	//deepcopy 递归深复制 - 一层一层复制，性能不好，占用内存
 
+## 3.Immutable优化性能的方式 ##
+Immutable实现的原理是Persistent Data Structure(持久化数据结构)，也就是使用旧数据创建新数据时，要保证旧数据同时可用且不变。同时为了避免deepCopy把所有节点都复制一遍带来的性能损耗，Immutable使用了，Structural Sharing(结构共享),即如果对象树中一个节点发生变化，只修改这个节点和受它影响的父节点，其它节点则进行共享。
+
+## 4.Immutable中常用类型(Map,List) ##
 
 
 
