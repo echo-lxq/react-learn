@@ -3624,15 +3624,101 @@ Ant Design是一个致力于提升[用户]和[设计者]是哦那个体验的设
 Immutable实现的原理是Persistent Data Structure(持久化数据结构)，也就是使用旧数据创建新数据时，要保证旧数据同时可用且不变。同时为了避免deepCopy把所有节点都复制一遍带来的性能损耗，Immutable使用了，Structural Sharing(结构共享),即如果对象树中一个节点发生变化，只修改这个节点和受它影响的父节点，其它节点则进行共享。
 
 ## 4.Immutable中常用类型(Map,List) ##
+### 1.map(对象使用) ###
+> 下载 
 
+	npm i immutable
 
+> 引入,使用(简单结构)
 
+	import {map} from 'immutable'
 
-
-
-
-
+	var obj = {
+	    name:"WeiShan",
+	    age:18
+	}
+	var oldImmuObj = Map(obj)
+	var newImmuObj = oldImmuObj.set("name","copyWeiShan")
 	
+	// console.log(oldImmuObj,newImmuObj)
+	
+	//1.get获取immutable
+	
+	console.log(oldImmuObj.get("name"),newImmuObj.get("name"))
+	
+	//2.immutable===>普通对象
+	
+	console.log(oldImmuObj.toJS(),newImmuObj.toJS())
+
+> 使用(复杂使用)
+
+	state = {
+        info:Map(
+          {
+            name:"WeiShan",
+            select:"aa",
+			//需要多层加map
+            filter:Map({
+              text:"",
+              up:true,
+              down:false
+            })
+          }
+        )
+    }
+
+    componentDidMount(){
+      console.log(this.state.info.get("filter"))
+    }
+
+![](./src/images/immutable-map.jpg)
+
+> 应用(scu)
+
+    <Child filter={this.state.info.get("filter")}></Child>
+	
+	//孩子scu
+	shouldComponentUpdate(nextProps, nextState) { 
+    
+	    if(this.props.filter === nextProps.filter){
+	      return false
+	    }
+	
+	    return true
+   }
+
+### 2.List(数组使用) ###
+
+> 基本使用(封装与原来数组方法一样同名)
+
+	import React, { Component } from 'react'
+	
+	import {List} from 'immutable'
+	
+	var arr = List([1,2,3])
+	
+	var arr2 = arr.push(4) //push不会影响老的对象结构
+	
+	var arr3 = arr2.concat([5,6,7]) //不会影响之前的
+	
+	console.log(arr.toJS(),arr2,arr3)
+	
+	export default class App extends Component {
+	    state = {
+	        favor:List(
+	            ["aaa","bbb","ccc"]
+	        )
+	    }
+	  render() {
+	    return (
+	      <div>
+	        {this.state.favor.map(item=><li key={item}>{item}</li>)}
+	      </div>
+	    )
+	  }
+	}
+
+3.多种组合
 
 
 

@@ -1,3 +1,13 @@
+/*
+ * @Author: WeiShan
+ * @Date: 2022-09-17 21:57:38
+ * @LastEditors: WeiShan
+ * @LastEditTime: 2022-09-18 10:29:09
+ * @FilePath: \react-learn\src\09-immutable\01-base.js
+ * @Description: 
+ * 
+ * Copyright (c) 2022 by WeiShan/xls, All Rights Reserved. 
+ */
 import React, { useEffect } from 'react'
 
 //引用复制,浅复制
@@ -41,4 +51,4 @@ export default function App() {
   return (
     <div>1</div>
   )
-} 
+}
