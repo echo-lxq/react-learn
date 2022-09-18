@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-18 11:25:54
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-18 11:05:03
+ * @LastEditTime: 2022-09-18 22:10:04
  * @FilePath: \react-learn\src\index.js
  * @Description: 
  * 
@@ -12,7 +12,7 @@ import React from "react";
 
 import ReactDOM from "react-dom/client";
 
-import App from "./09-immutable/04-list";
+import App from "./09-immutable/06-个人信息修改第二版";
 
 
 const container = document.getElementById('root');

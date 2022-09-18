@@ -3718,7 +3718,61 @@ Immutable实现的原理是Persistent Data Structure(持久化数据结构)，�
 	  }
 	}
 
-3.多种组合
+## 5.immutable高阶使用 ##
+
+> 使用 fromJS 处理复杂数据结构
+
+	//引入
+	import {fromJS} from 'immutable'
+	
+	//数据处理
+	state = {
+        info:fromJS(
+            {
+                name:"WeiShan",
+                location:{
+                    province:"辽宁",
+                    city:"大连"
+                },
+                favor:["读书","看报","写代码"]
+            }
+        )
+    }
+
+	//修改多层map
+	this.setState({
+        info:this.state.info.set("name","copyWeiShan")
+            .setIn(["location","city"],"沈阳")
+    })
+
+	
+	//修改数组对象 undateIn(传入数组--多层的话[favor],第二个为回调函数，传入形参并对形参数组做处理)
+	this.setState({
+        info:this.state.info.updateIn(
+            ["favor"],(list)=>list.splice(index,1)
+        )
+    })
+	
+## 6.immutable-redux ##
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
