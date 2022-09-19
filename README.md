@@ -3755,14 +3755,77 @@ Immutable实现的原理是Persistent Data Structure(持久化数据结构)，�
 	
 ## 6.immutable-redux ##
 
+> 第一种方法
+
+	const TabbarReducer = (prevState=fromJS({
+	    show:true
+	}),action)=>{
+	    // let newState = {...prevState}
+	    switch(action.type){
+	        case "hide-tabbar":
+	            return prevState.set("show",false)
+	        case "show-tabbar":
+	            return prevState.set("show",true)
+	        default:
+	            return prevState
+	    }
+	}
+	export default TabbarReducer
 
 
+> 第二种方法
+
+	const CityReducer = (prevState={
+	    // show:true,
+	    cityName:"北京"
+	},action)=>{
+	    let newState = fromJS(prevState)
+	    switch(action.type){
+	        case "change-city":
+	            // newState.cityName = action.payload
+	            return newState.set("cityName",action.payload).toJS()
+	        default:
+	            return prevState
+	    }
+	    
+	}
+	
+	export default CityReducer
 
 
+# 十六、Mobx #
 
+[https://cn.mobx.js.org/](https://cn.mobx.js.org/)
 
+## 1.Mobx介绍 ##
+(1)Mobx是一个功能强大，上手非常容易的状态管理工具
 
+(2)Mobx背后的哲学很简单 **任何源自应用状态的东西都应该自动地获得。*
 
+(3)Mobx利用getter和setter来收集组件地数据依赖关系，从而在数据发生变化地时候精确知道哪些组件需要重绘，在界面地规模变大的时候，往往会有很多细粒度更新。(vue类似)
+
+![](./src/images/mobx.png)
+
+## 2.Mobx与redux的区别 ##
+
+- Mobx写法上更偏向于OOP
+- 对一份数据直接进行修改操作，不需要始终返回一个新的数据
+- 并非单一store，可以多个store
+- Redux默认以JavaScript原生对象形式存储数据，而Mobx使用可观察对象
+
+**优点：**
+
+a.学习成本小
+
+b.面向对象编成，而且对TS友好
+
+**缺点：**
+
+a.过于自由：Mobx提供的约定及模板代码很少，代码编写很自由，如果不做一些约定，比较容易导致团队代码风格不统一
+
+b.相关的中间件很少，逻辑层业务整合是问题。
+
+## 3.Mobx使用 ##
 
 
 
