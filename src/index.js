@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-07-18 11:25:54
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-19 15:58:17
+ * @LastEditTime: 2022-09-20 08:18:13
  * @FilePath: \react-learn\src\index.js
  * @Description: 
  * 
@@ -12,7 +12,7 @@ import React from "react";
 
 import ReactDOM from "react-dom/client";
 
-import App from "./09-immutable/redux/App";
+import App from "./10-Mobx/04-router/App";
 
 
 const container = document.getElementById('root');

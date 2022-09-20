@@ -3827,6 +3827,49 @@ b.相关的中间件很少，逻辑层业务整合是问题。
 
 ## 3.Mobx使用 ##
 
+（1）observable和autorun
+
+	import {observable,autorun} from 'mobx'
+	
+	//对于普通类型数据监听 .box()方法
+	var observableNumber = observable.box(10)
+	var observableName = observable.box("WeiShan")
+	
+	observableNumber.set(20)
+	
+	//第一次执行一次，之后每次改变执行（有条件，只有相关的会自动执行）
+	autorun(()=>{
+	    console.log(observableNumber.get())
+	})
+	
+	//加map
+	var myObj = observable.map({
+	    name:"WeiShan",
+	    age:100
+	})
+	autorun(()=>{
+	    console.log("对象name属性改变",myObj.get("name"))
+	})
+	
+	//不加map
+	var myObj1 = observable({
+	    name:"WeiShan",
+	    age:100
+	})
+	autorun(()=>{
+	    console.log("对象name属性改变",myObj1.name)
+	})
+
+(2)
+
+
+
+
+
+
+
+
+
 
 
 
