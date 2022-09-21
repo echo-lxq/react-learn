@@ -3860,7 +3860,104 @@ b.相关的中间件很少，逻辑层业务整合是问题。
 	    console.log("对象name属性改变",myObj1.name)
 	})
 
-(2)
+(2)mobx-action，runInAction和严格模式
+
+方便统一在store中处理
+
+> 第一种写法
+
+	import {observable,configure, action} from 'mobx'
+	configure({
+	    enforceActions:"always"
+	})
+	//严格模式，必须写action
+	//如果是never，可以不写action
+	//最好设置always，防止任意地方修改值，降低不确定性
+	const store = observable(
+	    {
+	        isTabbarShow:true,
+	        list:[],
+	        cityName:"北京",
+	        changeShow(){
+	            this.isTabbarShow = true
+	        },
+	        changeHide(){
+	            this.isTabbarShow = false
+	        }
+	    },{
+	        changeHide:action,
+	        changeShow:action //标记两个方法是action，专门修改可观测的value  
+	    }
+	)
+	export default store
+
+> 第二种写法
+
+- 修饰器写法 @
+
+## 5.支持装饰器 ##
+
+	npm i @babel/core @babel/plugin-proposal-decorators @babel/preset-env
+
+### 创建.babelrc ###
+
+	{
+	    "presets": [
+	        "@babel/preset-env"
+	    ],
+	    "plugins": [
+	        [
+	            "@babel/plugin-proposal-decorators",
+	            {
+	                "legacy": true
+	            }
+	        ]
+	    ]
+	}
+
+### 创建config-overrides.js ###
+
+	const path = require('path') 
+	const { override, addDecoratorsLegacy } = require('customize-cra')
+	function resolve(dir) { 
+		return path.join(__dirname, dir) 
+	}
+	const customize = () => (config, env) => {
+		config.resolve.alias['@'] = resolve('src')
+		if (env === 'production') {
+			config.externals = {
+				'react': 'React',
+				'react-dom': 'ReactDOM' 
+			} 
+		}
+		return config 
+	};
+	module.exports = override(addDecoratorsLegacy(), customize())
+
+### 安装依赖 ###
+
+	npm i customize-cra react-app-rewired
+
+### 修改package.json ###
+
+	... 
+	"scripts": { 
+		"start": "react-app-rewired start", 
+		"build": "react-app-rewired build", 
+		"test": "react-app-rewired test", 
+		"eject": "react-app-rewired eject" 
+	},
+	...
+
+![](./src/images/babel-mobx.jpg)
+
+
+
+
+
+
+
+
 
 
 

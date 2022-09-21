@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-09-06 10:23:15
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-20 08:55:18
+ * @LastEditTime: 2022-09-20 16:53:47
  * @FilePath: \react-learn\src\10-Mobx\04-router\App.js
  * @Description: 
  * 
@@ -23,7 +23,7 @@ export default class App extends Component {
     isShow:false
   }
 
-  componentDidMount() { 
+  componentDidMount() {
     autorun(()=>{
       this.setState({
         isShow:store.isTabbarShow

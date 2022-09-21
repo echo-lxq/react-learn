@@ -18,10 +18,10 @@ export default function Detail(props) {
     console.log(props.location.state.id,"利用id取后端拿数据")
 
     useEffect(()=>{
-      store.isTabbarShow = false
+      store.changeShow()
       return(()=>{
         // console.log("销毁")
-        store.isTabbarShow = true
+        store.changeShow()
       })
     },[])
 
