@@ -3893,7 +3893,60 @@ b.相关的中间件很少，逻辑层业务整合是问题。
 
 > 第二种写法
 
-- 修饰器写法 @
+- 修饰器写法 @ 
+
+class Store{
+    
+    @observable isTabbarShow = true
+
+    @observable list = []
+
+    @action changeShow(){
+        this.isTabbarShow = true
+    }
+
+    @action changeHide(){
+        this.isTabbarShow = false
+    }
+}
+
+const store = new Store()
+
+export default store
+
+### runInAction ###
+
+> 处理异步
+
+	@action async getList(){
+        var list = await axios({
+            url:"https://m.maizuo.com/gateway?cityId=110100&ticketFlag=1&k=7406159",
+            method:"get",
+            headers:{
+              'X-Client-Info': '{"a":"3000","ch":"1002","v":"5.2.1","e":"1660142019135536282959873","bc":"110100"}',
+              'X-Host': 'mall.film-ticket.cinema.list'
+            }
+          }).then(res=>{
+            // console.log(res.data.data.cinemas)
+            return res.data.data.cinemas
+          }).catch(err=>{
+            console.log(err);
+          })
+        runInAction(()=>{
+            this.list = list
+        })
+    }
+
+> 取消订阅
+
+	var unsubscribe = autorun(()=>{
+      console.log(store.list,store.isTabbarShow)
+      setCinemaList(store.list)
+    })
+
+    return()=>{
+      unsubscribe()
+    }
 
 ## 5.支持装饰器 ##
 
