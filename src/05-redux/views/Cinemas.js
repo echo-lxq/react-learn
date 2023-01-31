@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-09-06 10:32:27
  * @LastEditors: WeiShan
- * @LastEditTime: 2022-09-11 21:24:03
+ * @LastEditTime: 2022-12-29 08:54:13
  * @FilePath: \react-learn\src\05-redux\views\Cinemas.js
  * @Description: 
  * 
@@ -59,7 +59,7 @@ export default function Cinemas(props) {
       
       <div>
         <ul>
-        {cinemaList.map(item=><li key={item.cinemaId}>{item.name}</li>)}    
+         {cinemaList.map(item=><li key={item.cinemaId}>{item.name}</li>)}    
         </ul>
       </div>
     </div>
