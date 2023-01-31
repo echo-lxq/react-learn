@@ -2,7 +2,7 @@
  * @Author: WeiShan
  * @Date: 2022-12-30 14:20:04
  * @LastEditors: WeiShan
- * @LastEditTime: 2023-01-31 09:19:31
+ * @LastEditTime: 2023-01-31 16:00:44
  * @FilePath: \react-learn\src\11-test\App.js
  * @Description: 
  * 
@@ -19,9 +19,9 @@ export default function App() {
   var [total,setTotal] = useState(0)
   var [finish,setFinish] = useState(0)
   var [addKey,setAddKey] = useState('')
+  var [select,setSelect] = useState(false)
 
   useEffect(()=>{
-    let finish = 0
     let initList = [
       {id:"001",text:"通信方式1",done:true},
       {id:"002",text:"通信方式2",done:true},
@@ -30,34 +30,26 @@ export default function App() {
       {id:"005",text:"通信方式5",done:false},
       {id:"006",text:"通信方式6",done:true}
     ]
-    for(let i=0;i<initList.length;i++){
-      if(initList[i].done){
-        finish++
-      }
-    }
-    // initList.forEach(function(value){
-    //   if(value.done){
-    //     finish++
-    //   }
-    // })
-    setFinish(finish)
     setList(initList)
-    setTotal(initList.length)
+    
   },[])
+  useEffect(()=>{
+    // TODO 已经优化的部分 - 初始化的时候只改变数组长度，当数组长度改变时修改完成数
+    let finish = list.filter(item=>item.done).length
+    setFinish(finish)
+    setTotal(list.length)
+    setSelect(list.length === finish&&list.length!==0)
+  },[list])
 
   let clearFinishTask = ()=>{
-    // TODO 更好的方式处理数组
+    // TODO 更好的方式处理数组 filter
+
     var newList = [...list]
-    var lists = [...list]
-    var j = 0
-    newList.forEach(function(value,index,array){
-      if(value.done){
-        lists.splice(index-j,1)
-        j++
-      }
-    })
-    setList(lists)
-    setTotal(lists.length)
+
+    newList = newList.filter(item=>!item.done)
+    
+    setList(newList)
+    setTotal(newList.length)
     setFinish(0)
   }
   let changeSelect = (index)=>{
@@ -76,6 +68,18 @@ export default function App() {
     // initList()
     console.log("新增输入框！",addKey)
     setAddKey("")
+    setTotal(++total)
+    // TODO 也放在数组变动的地方
+    // setSelect(false)
+  }
+  let selectAll = (e) =>{
+    // console.log("点击全选",e.target.checked)
+    var newList = [...list]
+    newList.forEach((item) => {
+      item.done = e.target.checked
+    })
+    setList(newList)
+    // setSelect(!select)
   }
 
   return (
@@ -87,7 +91,7 @@ export default function App() {
           list.map((item,index)=><div key={item.id}><input type="checkbox" name = "socket" value={item.id} checked={item.done} onChange={()=>{changeSelect(index)}} />{item.text}</div>)
         }
       <div>
-        <div style={{float:"left"}}><input type="checkbox" name = "socket" value="selectAll" />已完成{finish}/全部{total}</div>
+        <div style={{float:"left"}}><input checked={select} onChange={(e)=>{selectAll(e)}} type="checkbox" name = "socket" value="selectAll" />已完成{finish}/全部{total}</div>
         <div style={{float:"left"}}><button onClick={()=>{clearFinishTask()}}>清除已完成任务</button></div>
       </div>
     </div>
